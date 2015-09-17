@@ -1,0 +1,16 @@
+Steps:
+
+1. 	Open MATLAB. Run the following command.
+	>> mex -setup
+	Select compiler 1
+	If no compiler present download windows sdk from http://www.mathworks.in/support/compilers/R2012a/win64.html and run again.
+	
+2.	Download OpenCV binaries from http://opencv.org/ and extract to your main drive. (C: in my case)
+
+3. 	Download mexopencv from https://github.com/kyamagu/mexopencv and extract. 
+
+4. 	Add mexopencv to path and run 
+	>> mexopencv.make
+	
+5. Ready to go. Run example (face_detection.m) code.
+

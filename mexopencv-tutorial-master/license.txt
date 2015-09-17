@@ -1,0 +1,6 @@
+Hi All,
+
+I do not take any credit for the codes or images available here. I would like to thank Kota Yamaguchi for developing the mexopencv software. (http://www.cs.stonybrook.edu/~kyamagu/mexopencv/)
+
+Best,
+Surya
