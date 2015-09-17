@@ -6,8 +6,8 @@ close all;
 img = imread('Sample Images\fig1.jpg');
 
 % This is the homography matrix
-m =[1, -0.5, 0
-    -0.2, 1, 0
+m =[1, 0, 0
+    0, 1, 0
     0, 0, 1];
 
 % Find the size of img
