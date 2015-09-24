@@ -22,6 +22,7 @@ sz = size(img);
 %     while assign vector Y  with the value from 1 to sz(1) at each COL (Y-dir)
 %   - Create vector A with dimension of (1 * sizeof(X)) by (1 * sizeof(Y)) by 1
 %     filled with ones.
+tic;
 [X,Y]= meshgrid(1:sz(2), 1:sz(1));
 A = [reshape(Y,1,[]);
      reshape(X,1,[]);
@@ -54,7 +55,7 @@ imgNew = uint8(zeros(szNew(1), szNew(2),3));
 imgNew(ind) = img(indOld);
 imgNew(ind + szNew(1) * szNew(2)) = img(indOld + sz(1) * sz(2));
 imgNew(ind + szNew(1) * szNew(2) * 2) = img(indOld + sz(1) * sz(2) * 2);
-
+toc;
 % Display the reuslt
 figure('position',[200,500,500,300]);
 imshow(img);
