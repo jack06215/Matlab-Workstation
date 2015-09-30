@@ -1,0 +1,39 @@
+% Cleaning up the screen and previous variables
+clear; 
+close all;
+
+% Read in an image
+imageIn = imread('Sample Images\fig1.jpg');
+imgRef = imref2d(size(imageIn));
+imageInGray = rgb2gray(imageIn);
+
+[gx, gy] = gradient(double(imageIn));
+[gxx, gxy] = gradient(gx);
+[gxy, gyy] = gradient(gy);
+
+detH = (gxx .* gyy) - (gxy .* gxy);
+
+gauKernal = fspecial('gaussian', 11, 0.5);
+gxx = imfilter(gxx, gauKernal);
+gxy = imfilter(gxy, gauKernal);
+gyy = imfilter(gyy, gauKernal);
+
+for i = 1:size(detH, 1)
+    for j = 1:size(detH, 2)
+        pixelHessianResponse = detH(i, j, :);
+        text = [i, ' ', j, ' ', ' 1\n',
+                i, ' ', j, ' ', ' 2\n',
+                i, ' ', j, ' ', ' 3\n'];
+        disp(text);
+    end
+end
+
+% Display the reuslt
+fig1 = subplot(1,2,1);
+imshow(imageIn, 'InitialMagnification', 'fit');
+title(fig1, 'Original');
+
+fig2 = subplot(1,2,2);
+imshow(detH, 'InitialMagnification', 'fit');
+title(fig2, 'detH');
+
