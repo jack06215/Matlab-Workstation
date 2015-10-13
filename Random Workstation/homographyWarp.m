@@ -6,9 +6,9 @@ close all;
 img = imread('Sample Images\fig1.jpg');
 
 % This is the homography matrix
-m =[1, 0, 0
+m =[1, -0, 0
     0, 1, 0
-    0, 0, 1];
+    0.002, 0.002, 1];
 
 % Find the size of img
 sz = size(img);
@@ -33,7 +33,7 @@ A = [reshape(Y,1,[]);
 % [x' y' 1] = T(h) * A
 % T (h) is 3x3 homography matrix
 AA = m * A;
-AA = AA ./ [AA(3,:); AA(3,:); AA(3,:)]; % WARNING: Denominator..hard-code again
+AA = AA ./ [AA(3,:); AA(3,:); AA(3,:)];
 AA = int32(AA); % Truncate from float to int
 
 % Update the new dimension of warped image
