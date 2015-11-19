@@ -3,7 +3,6 @@ scene_image = imread('Sample Images\fig2.jpg');
 object_image = imread('Sample Images\fig1.jpg');
 %% 1. Define Ground Ref & A 2 from images
 %-----------------------------------------------------------------------------------------------
-% Define reference ground
 figure;
 imshow(scene_image);
 hold on;
@@ -17,7 +16,6 @@ plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
 plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Yellow', 'LineWidth', 3);
 line(PtRefX,PtRefY, 'Color', 'Blue', 'LineWidth', 3);
 %-----------------------------------------------------------------------------------------------
-% Define ground A
 figure;
 imshow(object_image);
 hold on;
@@ -31,9 +29,9 @@ plot(groundA_X1Y1(1),groundA_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
 plot(groundA_X2Y2(1),groundA_X2Y2(2),'o','Color','Yellow', 'LineWidth', 3);
 line(PtGndAX,PtGndAY, 'Color', 'Red', 'LineWidth', 3);
 hold off;
-%% 2. Map Ground ref and Ground A to the standard Cartesian coordinate system
+%% 2. Map Ground ref and Ground A from Pixel Coordinate to the Cartesian Coordinate
 origin = [0, 0, 0];
-ref = [100, 0, 0];
+ref = [1, 0, 0];
 figure;
 hold on;
 daspect([1 1 1]);
@@ -46,6 +44,7 @@ L_groundRef = line([origin(1) groundRef_Run], [origin(2) groundRef_Rise], 'color
 
 plot(groundA_Run, groundA_Rise, 'o', 'color', 'r', 'linewidth', 3);
 L_groundA = line([origin(1) groundA_Run], [origin(2) groundA_Rise], 'color', 'red', 'linewidth', 3);
+legend([L_Ref, L_groundRef, L_groundA], 'Ref', 'Ground Ref', 'Ground A');
 
 fitRef = polyfit([origin(1), ref(1)], [origin(2), ref(2)], 1);
 fitGndRef = polyfit([origin(1), groundRef_Run], [origin(2), groundRef_Rise], 1);
@@ -59,5 +58,7 @@ disp(['Angle Ref-GndA difference ', num2str(rad2deg(angleGndA)), ' degree']);
 
 angle_diff = angleGndA - angleGndRef;
 disp(['Angle GndRef-GndA difference is ', num2str(rad2deg(angle_diff)), ' degree']);
-
-legend([L_Ref, L_groundRef, L_groundA], 'Ref', 'Ground Ref', 'Ground A');
+%% Z. Wair for press key or mouse key, then close all windows and exit the program
+k = waitforbuttonpress;
+close all;
+clc;
