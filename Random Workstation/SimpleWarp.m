@@ -1,21 +1,23 @@
 clc;
 close all;
-transHomo = [0.5, 0, 0
-              0, 0.5, 0
-              0, 0, 1];
+angle = -30;
+transHomo = [cosd(angle) , -sind(angle), 0
+              sind(angle), cosd(angle) , 0
+              0          , 0           , 1];
 % Read a input image
 imgRaw = imread('Sample Images\fig1.jpg');
-imgGray = rgb2gray(imgRaw);
-
-% Crop a ROI to become a template image
-[imgTemplt, rectROI] = imcrop(imgGray);
+imgRawCopy = imgRaw;
 
 % Make transformation matrix
 transHomoT = transpose(transHomo);
 transMat = projective2d(transHomoT);
 
 % Perform image wapring 
-imgOutput = imwarp(imgGray, transMat);
+imgOutput = imwarp(imgRawCopy, transMat);
 
 % Display for testing only
-imshow(imgGray); figure; imshow(imgOutput);
+figure;
+subplot(1,3,1);
+imshow(imgRaw); 
+subplot(1,3,2);
+imshow(imgOutput);

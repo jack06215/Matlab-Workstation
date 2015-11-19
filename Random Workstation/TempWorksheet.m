@@ -24,6 +24,5 @@ y1 = x1_y1(2,:);
 % Plot of the rotated line
 ph = plot(x1,y1,'Color','Blue','LineWidth',3);
 % Here we lock our plot dimension ratio by 1:1:1 (Cuboid shape)
-
 plot(x1,y1,'o','MarkerEdgeColor', 'Blue', ...
 'MarkerSize', 3, 'MarkerFaceColor','Blue');

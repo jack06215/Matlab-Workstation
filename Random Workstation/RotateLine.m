@@ -2,8 +2,8 @@
 % Definition of the L1 parameter
 L1 = 10;
 % Definition of the points A and B
-A = [1,5];
-B = [2,6];
+A = [L1,0];
+B = [L1,6];
 x = [A(1) B(1)];
 y = [A(2) B(2)];
 % Definition of the offset

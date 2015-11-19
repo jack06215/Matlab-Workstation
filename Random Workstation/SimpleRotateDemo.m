@@ -11,7 +11,6 @@ grid on
 hold on
 % for each rotation angle from 10 to 350
 for a = 10:10:350
-    daspect([1 1 1]);
   % Definition of the rotation matrix
   mx=[  cosd(a) -sind(a)
         sind(a) cosd(a) ];
@@ -28,9 +27,9 @@ for a = 10:10:350
   % Plot of the rotated line
   ph = plot(x1,y1,'Color',colorrr,'LineWidth',3);
   % Here we lock our plot dimension ratio by 1:1:1 (Cuboid shape)
-  
+  daspect([1 1 1]);
   plot(x1,y1,'o','MarkerEdgeColor', colorrr, ...
      'MarkerSize', 3, 'MarkerFaceColor',colorrr);
-  pause(.005)
+  pause(.05)
 end
 legend('Original', 'Rotated', -1)
