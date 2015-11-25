@@ -85,9 +85,6 @@ scaled_pixels = C2_iTw * V;
 scale = scaled_pixels(3,:);
 m_prime = scaled_pixels ./ [scale;scale;scale];
 
-% Check if m_prime'*F_ANALYTIC*m = 0
-m_prime(:,5).'*F_ANALYTIC*m(:,5);
-
 %% 5. Open two windows for both image planes, showing 2D points obtained in step 4
 scrsz = get(0, 'ScreenSize');
 f1 = figure('Position', [scrsz(1), scrsz(2), scrsz(3), scrsz(4)]);
