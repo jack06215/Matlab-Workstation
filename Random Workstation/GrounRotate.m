@@ -1,6 +1,6 @@
 %% Get an image
 scene_image = imread('Sample Images\fig2.jpg');
-object_image = imread('Sample Images\fig1.jpg');
+object_image = imread('Sample Images\bomb256.jpg');
 %% 1. Define Ground Ref & A 2 from images
 %-----------------------------------------------------------------------------------------------
 figure;

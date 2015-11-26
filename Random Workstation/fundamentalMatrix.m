@@ -51,7 +51,7 @@ C1_F = (transpose(C2_Intrinsic(:,1:3)) \ transpose(RC2)) * (tx /(C1_Intrinsic(:,
 C2_F = (transpose(C1_Intrinsic(:,1:3)) \ tx) * (RC2 / transpose(C2_Intrinsic(:,1:3)));
 C1_F_ANALYTIC = C1_F/ C1_F(3,3);
 C2_F_ANALYTIC = C2_F/ C2_F(3,3);
-%% 3. Define a set of object points w.r.t. the world (i.e. Camera 1) coordinate system
+%% 3. Define a set of object points(3D homogenous coordinate) w.r.t. the world (i.e. Camera 1) coordinate system
 V(:,1) = [400;-400;2000;1];
 V(:,2) = [300;-400;3000;1];
 V(:,3) = [500;-400;4000;1];
@@ -142,18 +142,18 @@ d1 = -l1(3,:)./l1(2,:);
 m2 = -l2(1,:)./l2(2,:);
 d2 = -l2(3,:)./l2(2,:);
 Figure2 = copy(Figure1);
-for i = 1:num_of_points
+for i = 1:1
     y1(i,:) = m1(i) * x1 + d1(i);
     y2(i,:) = m2(i) * x2 + d2(i);
     subplot(1,2,1); hold on;
-    Figure_C1_EpipolarLines = plot(x1,y1(i,:), 'Color', 'b');
-    xlim([-400 600]);
-    ylim([-400 600]);
+    Figure_C1_EpipolarLines = plot(x1,y1(i,:), '-', 'Color', 'b');
+    xlim([-600 600]);
+    ylim([-600 600]);
     axis square;
     title('2D Points and Epipolar Line & Epipole of Camera 1');
     
     subplot(1,2,2); hold on;
-    Figure_C2_EpipolarLines = plot(x2,y2(i,:), 'Color', 'b');
+    Figure_C2_EpipolarLines = plot(x2,y2(i,:), '-', 'Color', 'b');
     xlim([-600 600]);
     ylim([-600 600]);
     axis square;
@@ -170,5 +170,7 @@ C2_Epipole = C2_Intrinsic * C2_Extrinsic * C1_wrt_C1;
 C2_Epipole = C2_Epipole / C2_Epipole(3);
 subplot(1,2,1); hold on;
 Figure_C1_Epipole = plot(C1_Epipole(1), C1_Epipole(2), 'o', 'Color', 'Red');
+legend([Figure_C1_EpipolarLines, Figure_C1_Epipole], 'Epipolar Lines', 'Epipole');
 subplot(1,2,2); hold on;
 Figure_C2_Epipole = plot(C2_Epipole(1), C2_Epipole(2), 'o', 'Color', 'Red');
+legend([Figure_C2_EpipolarLines, Figure_C2_Epipole], 'Epipolar Lines', 'Epipole');
