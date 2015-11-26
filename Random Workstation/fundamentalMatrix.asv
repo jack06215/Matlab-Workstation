@@ -150,15 +150,13 @@ for i = 1:num_of_points
     xlim([-400 600]);
     ylim([-400 600]);
     axis square;
-    title('2D Points and Epipolar Line & Epipole of Camera 1');
+    title('H')
     
     subplot(1,2,2); hold on;
     Figure_C2_EpipolarLines = plot(x2,y2(i,:), 'Color', 'b');
+    axis square;
     xlim([-600 600]);
     ylim([-600 600]);
-    axis square;
-    title('2D Points and Epipolar Line & Epipole of Camera 2');
-    
 end
 %% 9. Draw the epipole for each camera
 C2_wrt_C1 = [c1Kc2(1:3,4);1];
