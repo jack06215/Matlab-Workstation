@@ -1,8 +1,8 @@
 clc;
 close all;
 angle = -30;
-transHomo = [cosd(angle) , -sind(angle), 0
-              sind(angle), cosd(angle) , 0
+transHomo = [1 , 0, 0
+              0, 0.5, 0
               0          , 0           , 1];
 % Read a input image
 imgRaw = imread('Sample Images\fig1.jpg');
