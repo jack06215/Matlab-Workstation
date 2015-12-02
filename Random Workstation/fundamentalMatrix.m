@@ -142,7 +142,7 @@ d1 = -l1(3,:)./l1(2,:);
 m2 = -l2(1,:)./l2(2,:);
 d2 = -l2(3,:)./l2(2,:);
 Figure2 = copy(Figure1);
-for i = 1:num_of_points
+for i = 1:1
     y1(i,:) = m1(i) * x1 + d1(i);
     y2(i,:) = m2(i) * x2 + d2(i);
     subplot(1,2,1); hold on;

@@ -1,15 +1,14 @@
 %% Load reference image, detect SURF points, and extract descriptors
-referenceImage = imread('Sample Images\PyramidPattern.jpg');
+referenceImage = imread('Sample Images\SunflowerPattern.jpg');
 
 % Detect and extract SURF features
 referenceImageGray = rgb2gray(referenceImage);
 referencePts = detectSURFFeatures(referenceImageGray);
 
 referenceFeatures = extractFeatures(referenceImageGray, referencePts);
-
+subplot(1,2,1);
 %% Dsplay SURF features for a reference image
 
-figure;
 imshow(referenceImage), hold on;
 title('Reference Image');
 plot(referencePts.selectStrongest(50));
@@ -17,20 +16,22 @@ plot(referencePts.selectStrongest(50));
 %% Initialise replacement video
 video = vision.VideoFileReader('Sample Images\MAH00019.avi');
 
-% camera = webcam('FJ Camera');
-% set(camera, 'Resolution', '640x480');
+camera = webcam('FJ Camera');
+set(camera, 'Resolution', '640x480');
 
 %% Detect SURF features in webcam frame
-%cameraFrame = snapshot(camera);
-cameraFrame = imread('Sample Images\PyramidPatternTest.jpg');
+while true
+    
+cameraFrame = snapshot(camera);
+%cameraFrame = imread('Sample Images\PyramidPatternTest.jpg');
 cameraFeatureGray = rgb2gray(cameraFrame);
 cameraPts = detectSURFFeatures(cameraFeatureGray);
 
-figure;
-imshow(cameraFrame), hold on;
-title('Webcam frame');
-plot(cameraPts.selectStrongest(50));
-
+% subplot(1,2,2);
+% imshow(cameraFrame), hold on;
+% title('Webcam frame');
+% plot(cameraPts.selectStrongest(50));
+% 
 %% Try to match the reference image and camera frame features
 cameraFeatures = extractFeatures(cameraFeatureGray, cameraPts);
 idxPairs = matchFeatures(cameraFeatures, referenceFeatures);
@@ -39,60 +40,61 @@ idxPairs = matchFeatures(cameraFeatures, referenceFeatures);
 matchedCameraPts = cameraPts(idxPairs(:,1));
 matchedReferencePts = referencePts(idxPairs(:,2));
 
-figure, hold on;
-title('Matched feature (with outliers)');
-showMatchedFeatures(cameraFrame, referenceImage, ...
-                    matchedCameraPts, matchedReferencePts, 'Montage');
+% figure(2);
+% title('Matched feature (with outliers)');
+% showMatchedFeatures(cameraFrame, referenceImage, ...
+%                     matchedCameraPts, matchedReferencePts, 'Montage');
                 
 %% Get geometric transfomration between reference image and webcam frame
 [referenceTransform, inlierReferencePts, inlierCameraPts] ...
     = estimateGeometricTransform(...
                 matchedReferencePts, matchedCameraPts, 'Similarity');
 % Show the inliers of the estimated geometric transfomration
-figure(), hold on;
+figure(2);
 showMatchedFeatures(cameraFrame, referenceImage,...
                     inlierCameraPts, inlierReferencePts, 'Montage');
-%% Rescale replacement video frame
-
-% Load replacement video frame
-videoFrame = im2uint8(step(video));
-
-% Get replacement and reference dimensions
-repDims = size(videoFrame(:,:,1));
-refDims = size(referenceImage(:,:,1));
-
-% Find transformation that scales video frame to replace image size,
-% preserving aspect ratio
-% scaleTransform = findScaleTransform(refDims, repDims);
-scaleTransform = [570/1080, 0, 0;
-                  0, 600/1920, 0;
-                  0, 0, 1];
-              
-transHomoT = transpose(scaleTransform);
-transMat = projective2d(transHomoT);
-
-videoFrameScaled = imwarp(videoFrame, transMat);
-figure(), hold on;
-imshowpair(cameraFrame, videoFrameScaled, 'Montage');
-
-%% Apply estimated geometric transform to scaled replecement video frame
-videoFrameTransformed = imwarp(videoFrameScaled, referenceTransform);
-figure(), hold on;
-imshowpair(cameraFrame, videoFrameTransformed, 'Montage');
-
-%% Insert transformed replecement video frame into webcam frame
-
-alphaBlender = vision.AlphaBlender(...
-    'Operation', 'Binary mask', 'MaskSource', 'Input port');
-
-mask = videoFrameTransformed(:,:,1) | ...
-       videoFrameTransformed(:,:,2) | ...
-       videoFrameTransformed(:,:,3) > 0;
-outputFrame = step(alphaBlender, cameraFrame, videoFrameTransformed , mask);
-
-figure(), hold on;
-imshow(outputFrame);
-
+end
+% %% Rescale replacement video frame
+% 
+% % Load replacement video frame
+% videoFrame = im2uint8(step(video));
+% 
+% % Get replacement and reference dimensions
+% repDims = size(videoFrame(:,:,1));
+% refDims = size(referenceImage(:,:,1));
+% 
+% % Find transformation that scales video frame to replace image size,
+% % preserving aspect ratio
+% % scaleTransform = findScaleTransform(refDims, repDims);
+% scaleTransform = [570/1080, 0, 0;
+%                   0, 600/1920, 0;
+%                   0, 0, 1];
+%               
+% transHomoT = transpose(scaleTransform);
+% transMat = projective2d(transHomoT);
+% 
+% videoFrameScaled = imwarp(videoFrame, transMat);
+% figure(), hold on;
+% imshowpair(cameraFrame, videoFrameScaled, 'Montage');
+% 
+% %% Apply estimated geometric transform to scaled replecement video frame
+% videoFrameTransformed = imwarp(videoFrameScaled, referenceTransform);
+% figure(), hold on;
+% imshowpair(cameraFrame, videoFrameTransformed, 'Montage');
+% 
+% %% Insert transformed replecement video frame into webcam frame
+% 
+% alphaBlender = vision.AlphaBlender(...
+%     'Operation', 'Binary mask', 'MaskSource', 'Input port');
+% 
+% mask = videoFrameTransformed(:,:,1) | ...
+%        videoFrameTransformed(:,:,2) | ...
+%        videoFrameTransformed(:,:,3) > 0;
+% outputFrame = step(alphaBlender, cameraFrame, videoFrameTransformed , mask);
+% 
+% figure(), hold on;
+% imshow(outputFrame);
+% 
 % %% Initialise Point Tracker
 % 
 % pointTracker = vision.PointTracker('MaxBidirectionalError', 2);
@@ -162,5 +164,5 @@ imshow(outputFrame);
 
 %% Finally Clean up
 release(video);
-% delete(camera);
+delete(camera);
 
