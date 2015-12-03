@@ -1,20 +1,3 @@
-% lines = APPgetLargeConnectedEdges(grayIm, minLen)
-% 
-% Uses the method of Video Compass [Kosecka, et al 2002] to get long,
-% straight edges.
-% 
-% Input:
-%   grayIm: grayscale image to be analyzed
-%   minLen: minimum length in pixels for edge (suggested 0.025*diagonal)
-% Output:
-%   lines: parameters for long, straight lines 
-%          (nlines, [x1 x2 y1 y2 theta r])
-%
-% To display result: 
-%   figure(1), hold off, imshow(grayIm)
-%   figure(1), hold on, plot(lines(:, [1 2])', lines(:, [3 4])')
-%
-% Copyright(C) Derek Hoiem, Carnegie Mellon University, 2007
 function lines = getLines(grayIm, minLen)
 
 %% 1. Canny edge detection
@@ -116,6 +99,7 @@ for k = 1:num_dir
                 y2 = mean_y + sin(theta)*l/2;                           
                 theta = theta - pi / 2;
                 r = mean_x*cos(theta)+mean_y*sin(theta);
+                %tan_angle = atan2()
                 lines(line_count, 1:9) = [x1 x2 y1 y2 theta r l mean_x mean_y];	
             end
         end
