@@ -1,49 +1,43 @@
-%% Read in an image, run through the edge detector
-testImg = imread('Sample Images\fig2.jpg');
-figure;
-imshow(testImg);
-thetaSampleFrequency = 1/500; % Define the precision of rotation to be captured(0-pi)
-testImg = rgb2gray(testImg);
-BW = edge(testImg, 'canny');
+vanishingPts = [100, 10;
+                150, 70;
+                200, 10];
+            
+movingPts = [149, 30];
 
-%% Hough Transform starts from here
-% Define the hough space
-tic;
-BW = flipud(BW);
-[width,height] = size(BW);
-rhoLimit = norm([width height]);
-rho = (-rhoLimit:1:rhoLimit);          
-theta = (0:thetaSampleFrequency:pi);
-numThetas = numel(theta);
-houghSpace = zeros(numel(rho),numThetas);
- 
-% Find the "edge" pixels
-[xIndicies,yIndicies] = find(BW);
- 
-% Pre-allocate space for the accumulator array
-numEdgePixels = numel(xIndicies);
-accumulator = zeros(numEdgePixels,numThetas);
- 
-% Pre-allocate cosine and sine calculations to increase speed. In
-% addition to pre-callculating sine and cosine we are also multiplying
-% them by the proper pixel weights such that the rows will be indexed by 
-% the pixel number and the columns will be indexed by the thetas.
-% Example: cosine(3,:) is 2*cosine(0 to pi)
-%         cosine(:,1) is (0 to width of image)*cosine(0)
-cosine = (0:width-1)'*cos(theta); % Matrix Outerproduct  
-sine = (0:height-1)'*sin(theta); % Matrix Outerproduct
+figure(1), hold on;
+daspect([1 1 1]);
+% Triangular formed by three vanishing points
+plot(vanishingPts(:,1), vanishingPts(:,2), 'x', 'Color', 'Red', 'MarkerSize', 15, 'LineWidth', 2);
+plot([vanishingPts(1,1), vanishingPts(2,1)], [vanishingPts(1,2), vanishingPts(2,2)], '-', 'Color', 'Green', 'LineWidth', 2);
+plot([vanishingPts(1,1), vanishingPts(3,1)], [vanishingPts(1,2), vanishingPts(3,2)], '-', 'Color', 'Green', 'LineWidth', 2);
+plot([vanishingPts(2,1), vanishingPts(3,1)], [vanishingPts(2,2), vanishingPts(3,2)], '-', 'Color', 'Green', 'LineWidth', 2);
 
-accumulator((1:numEdgePixels),:) = cosine(xIndicies,:) + sine(yIndicies,:);
+% Moving points
+plot(movingPts(:,1), movingPts(:,2), 'x', 'Color', 'Black', 'MarkerSize', 15, 'LineWidth', 2);
+plot([movingPts(1), vanishingPts(1,1)], [movingPts(2), vanishingPts(1,2)], '-', 'Color', 'M', 'LineWidth', 1);
+plot([movingPts(1), vanishingPts(2,1)], [movingPts(2), vanishingPts(2,2)], '-', 'Color', 'M', 'LineWidth', 1);
+plot([movingPts(1), vanishingPts(3,1)], [movingPts(2), vanishingPts(3,2)], '-', 'Color', 'M', 'LineWidth', 1);
 
-% Scan over the thetas and bin the rhos 
-for i = (1:numThetas)
-    houghSpace(:,i) = hist(accumulator(:,i),rho);
-end
-toc;
-figure();
-pcolor(theta,rho,houghSpace);
-shading flat;
-title('Hough Transform');
-xlabel('Theta (radians)');
-ylabel('Rho (pixels)');
-colormap(parula(5));
+% p = alpha*p1 + beta*p2 + gamma*p3
+
+tempVar =   -vanishingPts(2,1) * vanishingPts(3,2) + ...
+            vanishingPts(2,1) * vanishingPts(1,2) + ...
+            vanishingPts(1,1) * vanishingPts(3,2) + ... 
+            vanishingPts(3,1) * vanishingPts(2,2) - ...            
+            vanishingPts(3,1) * vanishingPts(1,2) - ...
+            vanishingPts(1,1) * vanishingPts(2,2);
+% beta = (x3*Y - x1*Y - x3*y1 - X*y3 + x1*y3 + X*y1 ) / (-x2*y3 + x2*y1 + x1*y3 + x3*y2 - x3*y1 - x1y2)       
+beta =  (vanishingPts(3,1) * movingPts(2) - ...
+        vanishingPts(1,1) * movingPts(2) - ...
+        vanishingPts(3,1) * vanishingPts(1,2) - ...
+        movingPts(1) * vanishingPts(3,2) + ...
+        vanishingPts(1,1) * vanishingPts(3,2) + ...
+        movingPts(1) * vanishingPts(1,2) ) / tempVar;
+% gamma = (X*y2 - X*y1 - x1*y2 - x2*Y + x2*y1 + x1*Y) / (-x2*y3 + x2*y1 + x1*y3 + x3*y2 - x3*y1 - x1y2)
+gamma =     (movingPts(1) * vanishingPts(2,2) - ...
+            movingPts(1) * vanishingPts(1,2) - ...
+            vanishingPts(1,1) * vanishingPts(2,2) - ...
+            vanishingPts(2,1) * movingPts(2) + ...
+            vanishingPts(2,1) * vanishingPts(1,2) + ...
+            vanishingPts(1,1) * movingPts(2) ) / tempVar;
+alpha = 1 - (beta + gamma);
