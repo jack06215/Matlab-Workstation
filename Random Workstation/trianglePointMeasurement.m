@@ -9,7 +9,10 @@ vanishingptsB = [125, 10;
 movingPtsA = [149, 30;
               130, 25;
               170, 50;
-              145, 45];
+              145, 45;
+              129, 20;
+              100, 15;
+              90, 20;];
 movingPtsB = [];
 for i = 1:size(movingPtsA);
 %% Triangulation measurement (?
@@ -65,3 +68,4 @@ plot(movingPtsB(:,1), movingPtsB(:,2), 'x', 'Color', 'Cyan', 'MarkerSize', 15, '
 % plot([movingPtsB(1), vanishingptsB(1,1)], [movingPtsB(2), vanishingptsB(1,2)], '-', 'Color', 'M', 'LineWidth', 1);
 % plot([movingPtsB(1), vanishingptsB(2,1)], [movingPtsB(2), vanishingptsB(2,2)], '-', 'Color', 'M', 'LineWidth', 1);
 % plot([movingPtsB(1), vanishingptsB(3,1)], [movingPtsB(2), vanishingptsB(3,2)], '-', 'Color', 'M', 'LineWidth', 1);
+[tform,inlierPtsDistorted,inlierPtsOriginal] = estimateGeometricTransform(movingPtsA, movingPtsB, 'affine');
