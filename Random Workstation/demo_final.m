@@ -1,45 +1,40 @@
-f = imread('Sample Images\object0079.view04.png');
-g = f;
-f = rgb2gray(f);
-line = getLines(f,50);
-figure(1);
-imshow(g), hold on;
-for i = 1:size(line,1)
+refImg = imread('Sample Images\DSC_0764.JPG');
+currentImg = imread('Sample Images\DSC_0765.JPG');
+
+refImg_original = refImg;
+currentImg_original = currentImg;
+
+refImg = rgb2gray(refImg);
+currentImg = rgb2gray(currentImg);
+
+refImg_line = getLines(refImg,50);
+currentImg_line = getLines(currentImg, 50);
+
+figure;
+imshow(refImg_original), hold on;
+for i = 1:size(refImg_line,1)
      %plot(line(i, [1 2])', line(i, [3 4])', 'Color', 'Red', 'LineWidth', 2);
-     plot(line(i,1),line(i,3),'x', 'Color', 'Yellow', 'LineWidth', 2);
-     plot(line(i,2),line(i,4),'x', 'Color', 'Green', 'LineWidth', 2);
+     plot(refImg_line(i,1),refImg_line(i,3),'x', 'Color', 'Yellow', 'LineWidth', 2);
+     plot(refImg_line(i,2),refImg_line(i,4),'x', 'Color', 'Green', 'LineWidth', 2);
      %pause(0.01);
 end
-[vanishing, point, foc] = detectVanishingPoint(g, f, line);
 
-if true
-    figure,
-    imshow(g)
-    hold on;
-    ri = randperm(size(point,1));
-    if length(ri) > 2000
-        ri = ri(1:2000);
-    end
-    for j = 1:length(ri)
-        i = ri(j);
-        if norm(point(i,:)) < Inf & norm(point(i,:)) > norm(size(f)) / 2
-            plot(point(i,1)+size(f,2)/2,point(i,2)+size(f,1)/2,'x','color','b');
-        end
-    end
-    lt = min(vanishing(:,1)) + size(f,2)/2 - 300;
-    rt = max(vanishing(:,1)) + size(f,2)/2 + 300;
-    tp = min(vanishing(:,2)) + size(f,1)/2 - 300;
-    bm = max(vanishing(:,2)) + size(f,1)/2 + 300;
-    axis([lt rt tp bm]);
-    plot([0 vanishing(1,1)] +size(f,2)/2,[0 vanishing(1,2)] + size(f,1)/2,'.-','markersize',10,'linewidth',2,'color','k');
-    plot([0 vanishing(2,1)] +size(f,2)/2,[0 vanishing(2,2)] + size(f,1)/2,'.-','markersize',10,'linewidth',2,'color','k');
-    plot([0 vanishing(3,1)] +size(f,2)/2,[0 vanishing(3,2)] + size(f,1)/2,'.-','markersize',10,'linewidth',2,'color','k');
-    plot(vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
-    plot(vanishing(2,1) +size(f,2)/2,vanishing(2,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
-    plot(vanishing(3,1) +size(f,2)/2,vanishing(3,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
+figure;
+imshow(currentImg_original), hold on;
+for i = 1:size(currentImg_line,1)
+     %plot(line(i, [1 2])', line(i, [3 4])', 'Color', 'Red', 'LineWidth', 2);
+     plot(currentImg_line(i,1),currentImg_line(i,3),'x', 'Color', 'Yellow', 'LineWidth', 2);
+     plot(currentImg_line(i,2),currentImg_line(i,4),'x', 'Color', 'Green', 'LineWidth', 2);
+     %pause(0.01);
 end
-fprintf('Coordinates of Detected Vanishing Points:\n');
-fprintf('%f\t%f\n',vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2);
-fprintf('%f\t%f\n',vanishing(2,1) +size(f,2)/2,vanishing(2,2) +size(f,1)/2);
-fprintf('%f\t%f\n',vanishing(3,1) +size(f,2)/2,vanishing(3,2) +size(f,1)/2);
-fprintf('Estimated Focal Length: %d\n',foc);
+
+[refImg_vanishing, refImg_point, refImg_foc] = detectVanishingPoint(refImg_original, refImg, refImg_line);
+[currentImg_vanishing, currentImg_point, currentImg_foc] = detectVanishingPoint(currentImg_original, currentImg, currentImg_line);
+drawVanishingPoint( refImg_original, refImg, refImg_vanishing, refImg_point, refImg_foc );
+drawVanishingPoint( currentImg_original, currentImg, currentImg_vanishing, currentImg_point, currentImg_foc );
+% movingPtsA = vertcat(currentImg_line(:,[1,3]), currentImg_line(:,[2,4]));
+% [ movingPtsB ] = triangleMeasure( movingPtsA, refImg_vanishing, currentImg_vanishing  );
+% [tform,inlierPtsDistorted,inlierPtsOriginal] = estimateGeometricTransform(movingPtsA, movingPtsB, 'affine');
+% figure(2);
+% showMatchedFeatures(currentImg_original, refImg_original,...
+%                     inlierPtsOriginal, inlierPtsDistorted, 'Montage');
