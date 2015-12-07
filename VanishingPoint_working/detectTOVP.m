@@ -27,8 +27,8 @@ theta = atan2(point(:,2),point(:,1));
 T = -pi:0.01:pi;
 
 theta_bin = histc(theta,T);
-figure,bar(theta_bin)
-tb = theta_bin;
+% figure,bar(theta_bin)
+% tb = theta_bin;
 
 nhood =  60;
 dec = 1;
