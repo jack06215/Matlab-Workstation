@@ -1,5 +1,5 @@
 % Definition of the points A and B
-A = [12,65];
+A = [0,65];
 B = [0,60];
 x = [A(1) B(1)];
 y = [A(2) B(2)];

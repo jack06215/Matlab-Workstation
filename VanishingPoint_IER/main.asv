@@ -1,6 +1,6 @@
 clear, close all;
 refFrm = imread('Test Images\DSC_0769.png');
-curFrm = imread('Test Images\DSC_0769.png');
+curFrm = imread('Test Images\DSC_0769.JPG');
 
 %% Line segment + VP detection
 refFrm_line = getLines(rgb2gray(refFrm), 40);
