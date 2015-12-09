@@ -1,22 +1,29 @@
+close all;
 %% Read image and convert it to grayscale
-refImg = imread('BuildingA_original.png');
-currentImg = imread('BuildingA_sheer+rotate.png');
+refImg = imread('DSC_0789.png');
+currentImg = imread('DSC_078.png');
 refImg_gray = rgb2gray(refImg);
 currentImg_gray = rgb2gray(currentImg);
+
+%refImg_vanishing = [-81.4361724384012,-1601.81105937697;497.985790050530,77.1980984241665;-462.116264039683,139.505995276970];
+%currentImg_vanishing = [820.700439610719,97.6336727556712;-85.3786960482455,-1402.60904823873;-607.662423310135,-41.8854966622190];
+
 %% Vanishing Point Detection
 [refImg_lineSegment, refImg_vanishing, refImg_points, refImg_foc] = detectTOVP(refImg_gray);
 [currentImg_lineSegment, currentImg_vanishing, currentImg_points, currentImg_foc] = detectTOVP(currentImg_gray);
 refImg_movingPts = vertcat(refImg_lineSegment(:,[1,3]), refImg_lineSegment(:,[2,4]));
 [ refImg_estimateMovingPts ] = triangleMeasure( refImg_movingPts, refImg_vanishing, currentImg_vanishing  );
 %% Show Vanishing Point
-% figure;
-% imshow(refImg), hold on;
+figure;
+imshow(refImg), hold on;
+title('Previous');
 % plot(refImg_lineSegment(:,1),refImg_lineSegment(:,3),'x', 'Color', 'Yellow', 'LineWidth', 2);
 % plot(refImg_lineSegment(:,2),refImg_lineSegment(:,4),'x', 'Color', 'Green', 'LineWidth', 2);
 % showTOVP( refImg, refImg_gray, refImg_vanishing, refImg_points, refImg_foc);
 
-% figure;
-% imshow(currentImg), hold on;
+figure;
+imshow(currentImg), hold on;
+title('Current');
 % plot(currentImg_lineSegment(:,1), currentImg_lineSegment(:,3),'x', 'Color', 'Yellow', 'LineWidth', 2);
 % plot(currentImg_lineSegment(:,2), currentImg_lineSegment(:,4),'x', 'Color', 'Green', 'LineWidth', 2);
 % showTOVP(currentImg, currentImg_gray, currentImg_vanishing, currentImg_points, currentImg_foc);
@@ -50,12 +57,6 @@ end
 %% Estimate homography besed on moving points
 [tform,inlierPtsDistorted,inlierPtsOriginal] = estimateGeometricTransform(refImg_movingPts, refImg_estimateMovingPts, 'projective');
 outImg = imwarp(refImg, tform);
-figure;
-imshow(currentImg);
-title('Current');
-figure;
-imshow(refImg);
-title('Previous');
 figure;
 imshow(outImg);
 title('Warp');
