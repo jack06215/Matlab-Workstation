@@ -1,6 +1,6 @@
 clear, close all;
-refFrm = imread('Test Images\DSC_0769.png');
-curFrm = imread('Test Images\DSC_0769.png');
+refFrm = imread('Test Images\BuildingA_original.png');
+curFrm = imread('Test Images\DSC_0782.png');
 
 %% Line segment + VP detection
 refFrm_line = getLines(rgb2gray(refFrm), 40);
@@ -40,7 +40,7 @@ title('REF');
 % for i = 1:size(refFrm_line,1)
 %     plot([refFrm_line(i,3), refFrm_line(i,4)], [refFrm_line(i,1), refFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
-% draw(refFrm,refFrm_vp,zeros(3),refFrm_line);
+draw(refFrm,refFrm_vp,zeros(3),refFrm_line);
 % 
 figure;
 imshow(curFrm);
@@ -50,7 +50,7 @@ title('CUR');
 % for i = 1:size(curFrm_line,1)
 %     plot([curFrm_line(i,3), curFrm_line(i,4)], [curFrm_line(i,1), curFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
-% draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
+draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
 % 
 %% Triamgule measurement method
 refFrm_movingPts = vertcat(refFrm_line(:,[3,1]), refFrm_line(:,[4,2]));
