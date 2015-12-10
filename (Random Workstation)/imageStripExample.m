@@ -14,7 +14,7 @@ plot_col = 1;
 plot_index = 1;
 
 while(not(done))
-    disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
+    % disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
     subplot(size(stripImg, 1), size(stripImg, 2), plot_index);
     imshow(stripImg{plot_row,plot_col});
     plot_col = plot_col + 1;
