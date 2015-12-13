@@ -16,7 +16,7 @@ plot_index = 1;
 
 while(not(done))
 %     disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
-    stripGray{plot_row, plot_col} = rgb2gray(stripRefImg{plot_row,plot_col});
+    stripGray{plot_row, plot_col} = stripRefImg{plot_row,plot_col};
     subplot(size(stripRefImg, 1), size(stripRefImg, 2), plot_index);
     imshow(stripGray{plot_row,plot_col});
     plot_col = plot_col + 1;

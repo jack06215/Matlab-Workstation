@@ -1,6 +1,6 @@
 clear, close all;
-refFrm = imread('Scene\DSC_0764.JPG');
 curFrm = imread('Scene\DSC_0765.JPG');
+refFrm = imread('Scene\DSC_0764.JPG');
 
 %% Line segment + VP detection
 refFrm_line = getLines(rgb2gray(refFrm), 40);
@@ -38,7 +38,7 @@ title('REF');
 % plot(refFrm_line(:,3),refFrm_line(:,1),'x', 'Color', 'Yellow', 'LineWidth', 2);
 % plot(refFrm_line(:,4),refFrm_line(:,2),'x', 'Color', 'Green', 'LineWidth', 2);
 % for i = 1:size(refFrm_line,1)
-%     plot([refFrm_line(i,3), refFrm_line(i,4)], [refFrm_line(i,1), refFrm_line(i,2)], '-', 'Color', 'Blue');
+%      plot([refFrm_line(i,3), refFrm_line(i,4)], [refFrm_line(i,1), refFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
 draw(refFrm,refFrm_vp,zeros(3),refFrm_line);
 % 
@@ -48,7 +48,7 @@ title('CUR');
 % plot(curFrm_line(:,3),curFrm_line(:,1),'x', 'Color', 'Yellow', 'LineWidth', 2);
 % plot(curFrm_line(:,4),curFrm_line(:,2),'x', 'Color', 'Green', 'LineWidth', 2);
 % for i = 1:size(curFrm_line,1)
-%     plot([curFrm_line(i,3), curFrm_line(i,4)], [curFrm_line(i,1), curFrm_line(i,2)], '-', 'Color', 'Blue');
+%      plot([curFrm_line(i,3), curFrm_line(i,4)], [curFrm_line(i,1), curFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
 draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
 % 
