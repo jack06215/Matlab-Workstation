@@ -2,9 +2,9 @@ close all;
 ImgA = imread('Sample Images\fig1.jpg');
 ImgB = imread('Sample Images\fig1.jpg');
 
-warpMat = [0.8,-0.7,0;
-           0.6,0.6,0;
-           0,0,1]';
+warpMat = [cosd(45),-sind(45),0;
+           sind(45),cosd(45),0;
+           0.001,0.001,1]';
 tMake = projective2d(warpMat);
 ImgB = imwarp(ImgB, tMake);
 figure, imshow(ImgA);

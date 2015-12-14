@@ -1,12 +1,20 @@
 close all;
-ImgA = imread('Sample Images\fig1.jpg');
-ImgB = imread('Sample Images\fig1.jpg');
+ImgA = imread('Sample Images\fig2.jpg');
+ImgB = imread('Sample Images\fig2.jpg');
+difference = 100;
 
-warpMat = [1,-0.7,0;
-           0.,0.6,0;
-           0,0,1]';
-tMake = projective2d(warpMat);
-ImgB = imwarp(ImgB, tMake);
+point_i = [0,0;
+           0, size(ImgB, 1);
+           size(ImgB, 2), 0;
+           size(ImgB, 2), size(ImgB, 1)];
+point_iPrime = [0,0;
+                0, size(ImgB, 1);
+                size(ImgB, 2) - difference, 0 + difference;
+                size(ImgB, 2) - difference, size(ImgB, 1) - difference];
+            
+tform = estimateGeometricTransform(point_i, point_iPrime, 'projective');
+
+ImgB = imwarp(ImgB, tform);
 figure, imshow(ImgA);
 title(['dim: ', num2str(size(ImgA, 1)), ' x ', num2str(size(ImgA, 2))]);
 figure, imshow(ImgB);
