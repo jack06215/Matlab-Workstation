@@ -1,0 +1,2 @@
+img = imread('DSC_0764.JPG');
+img2 = imre

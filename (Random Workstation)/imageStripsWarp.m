@@ -12,8 +12,12 @@ done = false;
 plot_row = 1;
 plot_col = 1;
 plot_index = 1;
+
 while(not(done))
+%     disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
     stripGray{plot_row, plot_col} = stripRefImg{plot_row,plot_col};
+    subplot(size(stripRefImg, 1), size(stripRefImg, 2), plot_index);
+    imshow(stripGray{plot_row,plot_col});
     plot_col = plot_col + 1;
     if (plot_col > size(stripRefImg,2))
         plot_row = plot_row + 1;
@@ -24,8 +28,6 @@ while(not(done))
     end
     plot_index = plot_index + 1;
 end
-
-
-figure;
-refImg_modify = cell2mat(stripGray);
-imshow(refImg_modify);
+% figure;
+% refImg_modify = cell2mat(stripGray);
+% imshow(refImg_modify);
