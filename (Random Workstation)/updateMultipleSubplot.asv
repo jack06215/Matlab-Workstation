@@ -3,7 +3,7 @@ close all; clear;
 refFrm = imread('DSC_0764.JPG');                    % Reference image
 
 %% Define how to cut an image
-num_vertStrip = 2;                                  % Number of vertical strips
+num_vertStrip = 4;                                  % Number of vertical strips
 num_horzStrip = 1;                                  % Number of horizontal strips
 num_gridStrip = num_vertStrip * num_horzStrip;      % Number of grids in image
 num_chn = 3;                                        % Number of channel in the image 
@@ -57,19 +57,32 @@ done = false;       % Boolean indicator
 plot_row = 1;       % Row index
 plot_col = 1;       % Column index
 plot_index = 1;     % Plot index
-
 while(not(done))
     % Switch to subplot(sp1) handle
     subplot(curFrm_figHandle(plot_index)), hold on;
-    title('Select')
+    title('Select Point HERE', 'Color', 'Red');
     % Wait for user to select points
     [PtRefX,PtRefY] = getpts; 
     groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
     groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
+    
+    col_offset = sum(num_col_strips(1:plot_col)) - num_col_strips(1);
+    row_offset = sum(num_row_strips(1:plot_row)) - num_row_strips(1);
+
+    realCoor_X1Y1 = groundRef_X1Y1 + [col_offset, row_offset];
+    realCoorRef_X2Y2 = groundRef_X2Y2 + [col_offset, row_offset];
+    
+    realCoor_X1Y1
+    realCoorRef_X2Y2
+    
     plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-    plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Yellow', 'LineWidth', 3);
+    plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
     line(PtRefX,PtRefY, 'Color', 'Blue', 'LineWidth', 3);
+    title(['Strip[', num2str(plot_index), ']'], 'Color', 'Black');
     plot_col = plot_col + 1;
+    
+    figure(refFrm_figHandle);       % Switch to refFrm handle
+    
     % If column reach the end, go to next row
     if (plot_col > size(curFrm_strip,2))
         plot_row = plot_row + 1;
