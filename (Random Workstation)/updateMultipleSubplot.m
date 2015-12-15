@@ -1,6 +1,7 @@
 close all; clear;
 %% Read in image
-curImg = imread('DSC_0764.JPG');                    % Reference image
+curImg = imread('DSC_0764.JPG');                    % Curent image
+estImg = imread('DSC_0765.JPG');                    % Estimate image
 
 %% Define how to cut an image
 num_vertStrip = 4;                                  % Number of vertical strips
@@ -14,12 +15,12 @@ num_row_strips = repmat(size(curImg,1)/num_horzStrip,[1 num_horzStrip]);
 curFrm_strip = mat2cell(curImg, num_row_strips, num_col_strips, num_chn);
 
 %% Construct figure and windows
-refFrm_figHandle = figure;      % Create refFrm figure handle
-figure(refFrm_figHandle);       % Switch to refFrm handle
+curFrm_figHandle = figure;      % Create refFrm figure handle
+figure(curFrm_figHandle);       % Switch to refFrm handle
 imshow(curImg), truesize;       % Display the refFrm
 title('Current Image');       % Title
-curFrm_figHandle = figure;      % Create curFrm figure handle
-figure(curFrm_figHandle);       % Switch to curFrm handle
+curFrm_strip_figHandle = figure;      % Create curFrm figure handle
+figure(curFrm_strip_figHandle);       % Switch to curFrm handle
 
 %% Create the sub-windows for each image strip
 for i = 1:num_gridStrip
@@ -63,7 +64,7 @@ while(not(done))
     disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
     % Switch to subplot handle
     plot_index = plot_index + 1;
-    figure(curFrm_figHandle);
+    figure(curFrm_strip_figHandle);
     subplot(curFrm_subplotHandle(plot_index)), hold on;
     title('Select Point HERE', 'Color', 'Red');
     
@@ -86,7 +87,7 @@ while(not(done))
     title(['Strip[', num2str(plot_index), ']'], 'Color', 'Black');
     
     % Switch to refFrm handle and draw result
-    figure(refFrm_figHandle);       
+    figure(curFrm_figHandle);       
     hold on;
     plot(realCoor_X1Y1(1),realCoor_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
     plot(realCoor_X2Y2(1),realCoor_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
