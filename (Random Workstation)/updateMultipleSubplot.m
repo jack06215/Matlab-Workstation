@@ -15,12 +15,12 @@ num_row_strips = repmat(size(curImg,1)/num_horzStrip,[1 num_horzStrip]);
 curFrm_strip = mat2cell(curImg, num_row_strips, num_col_strips, num_chn);
 
 %% Construct figure and windows
-curFrm_figHandle = figure;      % Create refFrm figure handle
-figure(curFrm_figHandle);       % Switch to refFrm handle
-imshow(curImg), truesize;       % Display the refFrm
-title('Current Image');       % Title
-curFrm_strip_figHandle = figure;      % Create curFrm figure handle
-figure(curFrm_strip_figHandle);       % Switch to curFrm handle
+curFrm_figHandle = figure;              % Create refFrm figure handle
+figure(curFrm_figHandle);               % Switch to refFrm handle
+imshow(curImg), truesize;               % Display the refFrm
+title('Current Image');                 % Title
+curFrm_strip_figHandle = figure;        % Create curFrm figure handle
+figure(curFrm_strip_figHandle);         % Switch to curFrm handle
 
 %% Create the sub-windows for each image strip
 for i = 1:num_gridStrip
