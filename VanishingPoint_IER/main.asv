@@ -61,5 +61,5 @@ outImg = imwarp(refFrm, tform);
 figure;
 imshow(outImg);
 title('Warp');
-imwrite(curFrm, 'curFrm.png');
+imwrite(refFrm)
 imwrite(outImg, 'outImg.png');
