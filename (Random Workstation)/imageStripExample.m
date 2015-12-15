@@ -2,11 +2,11 @@ refImg = imread('Sample Images\dsc004901.jpg');
 refImg_BW = rgb2gray(refImg);
 num_vertStrip = 4;
 num_horzStrip = 1;
-num_dim = 3;
+num_chn = 3;
 
 col_cut = repmat(size(refImg,2)/num_vertStrip,[1 num_vertStrip]);
 row_cut = repmat(size(refImg,1)/num_horzStrip,[1 num_horzStrip]);
-stripRefImg = mat2cell(refImg, row_cut, col_cut, num_dim);
+stripRefImg = mat2cell(refImg, row_cut, col_cut, num_chn);
 stripGray = cell(size(row_cut,2), size(col_cut,2));
 
 done = false;
