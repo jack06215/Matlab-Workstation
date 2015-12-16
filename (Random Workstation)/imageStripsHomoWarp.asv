@@ -2,9 +2,19 @@ close all;
 ImgA = imread('DSC_0765.JPG');
 ImgB = imread('DSC_0764.JPG');
 yy = 500;
-point_i = [330.419137466307,258.128032345013;345.082210242588,260.715633423180;324.381401617251,300.392183288410;343.357142857143,302.979784366577];   
-point_iPrime = [346,248;366,249;349,296;369,294];        
+point_i = [268,	149;
+            322,152;
+            321,	184;
+            268,	183];
+       
+point_iPrime = [140 + yy, 288;
+                194 + yy, 289;
+                192 + yy, 322;
+                140 + yy, 321];
+            
 tform = estimateGeometricTransform(point_i, point_iPrime, 'affine');
+
+
 figure, imshow(ImgA), hold on;
 plot(point_i(:,1), point_i(:,2), '*', 'Color', 'Red');
 title(['dim: ', num2str(size(ImgA, 1)), ' x ', num2str(size(ImgA, 2))]);
