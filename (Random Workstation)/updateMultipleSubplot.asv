@@ -121,7 +121,6 @@ while(not(done))
 figure(refFrm_figHandle);               % Switch to refFrm figure handle
 hold on;
 done = false;
-refFrm_point = [];
 while(not(done))
     title('Select Point HERE', 'Color', 'Red');
     [PtRefX,PtRefY] = getpts;
@@ -129,13 +128,9 @@ while(not(done))
         groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
         groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-        plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
-        refFrm_point = [refFrm_point; groundRef_X1Y1]; 
-        refFrm_point = [refFrm_point; groundRef_X2Y2]; 
     else
-        title('Reference Image', 'Color', 'Black');
-        done = true;
+        do
     end
 end
- 
+plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3); 
 

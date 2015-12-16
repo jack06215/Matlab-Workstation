@@ -1,6 +1,6 @@
-refImg = imread('Sample Images\dsc004901.jpg');
+refImg = imread('outImg.png');
 refImg_BW = rgb2gray(refImg);
-num_vertStrip = 4;
+num_vertStrip = 2;
 num_horzStrip = 1;
 num_chn = 3;
 
@@ -19,6 +19,7 @@ while(not(done))
     stripGray{plot_row, plot_col} = stripRefImg{plot_row,plot_col};
     subplot(size(stripRefImg, 1), size(stripRefImg, 2), plot_index);
     imshow(stripGray{plot_row,plot_col});
+    imwrite(stripGray{plot_row,plot_col}, ['BV', num2str(plot_index), '.png']);
     plot_col = plot_col + 1;
     if (plot_col > size(stripRefImg,2))
         plot_row = plot_row + 1;
@@ -29,6 +30,6 @@ while(not(done))
     end
     plot_index = plot_index + 1;
 end
-figure;
-refImg_modify = cell2mat(stripGray);
-imshow(refImg_modify);
+% figure;
+% refImg_modify = cell2mat(stripGray);
+% imshow(refImg_modify);
