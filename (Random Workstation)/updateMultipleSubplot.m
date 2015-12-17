@@ -145,7 +145,11 @@ end
 %     plot(refFrm_point(i + 1, 1), refFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
 % end
 %% Estimate Geometric Transformation
-tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
-outImg = imwarp(curFrm_strip{1,2}, tform);
-figure;
-imshow(outImg);
+if (size(curFrm_point,1) > 0 & size(refFrm_point, 1) > 0)
+    tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
+    outImg = imwarp(curFrm_strip{1,2}, tform);
+    figure;
+    imshow(outImg);
+else
+    error('Empty vector is not allowed');
+end
