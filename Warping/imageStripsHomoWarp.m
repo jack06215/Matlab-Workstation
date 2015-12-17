@@ -1,20 +1,10 @@
 close all;
-ImgA = imread('DSC_0765.JPG');
-ImgB = imread('DSC_0764.JPG');
-yy = 500;
-point_i = [268,	149;
-            322,152;
-            321,	184;
-            268,	183];
-       
-point_iPrime = [140 + yy, 288;
-                194 + yy, 289;
-                192 + yy, 322;
-                140 + yy, 321];
-            
+ImgA = imread('curFrm.png');
+ImgB = imread('outImg.png');
+yy = 0;
+point_i = [329,256;323,298;347,259;345,304];
+point_iPrime = [442 + yy,309 + yy;435 + yy,353 + yy;463 + yy,316 + yy;460 + yy,357 + yy];      
 tform = estimateGeometricTransform(point_i, point_iPrime, 'affine');
-
-
 figure, imshow(ImgA), hold on;
 plot(point_i(:,1), point_i(:,2), '*', 'Color', 'Red');
 title(['dim: ', num2str(size(ImgA, 1)), ' x ', num2str(size(ImgA, 2))]);

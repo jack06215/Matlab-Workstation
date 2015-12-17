@@ -1,7 +1,7 @@
 close all; clear;
 %% Read in image
-refFrm = imread('DSC_0765.JPG');                    % Reference image
-curFrm = imread('DSC_0764.JPG');                    % Curent image
+refFrm = imread('curFrm.png');                    % Reference image
+curFrm = imread('outImg.png');                    % Curent image
 
 %% Define how to cut an image
 num_vertStrip = 2;                                  % Number of vertical strips
@@ -110,7 +110,7 @@ while(not(done))
         end
     end
  end
-% figure(refFrm_figHandle);       
+% figure(curFrm_figHandle);       
 % hold on;
 % j = 1;
 % for i = 1:2:size(curFrm_point,1)
@@ -121,6 +121,7 @@ while(not(done))
 figure(refFrm_figHandle);               % Switch to refFrm figure handle
 hold on;
 done = false;
+refFrm_point = [];
 while(not(done))
     title('Select Point HERE', 'Color', 'Red');
     [PtRefX,PtRefY] = getpts;
@@ -128,9 +129,23 @@ while(not(done))
         groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
         groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
+        plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
+        refFrm_point = [refFrm_point; groundRef_X1Y1]; 
+        refFrm_point = [refFrm_point; groundRef_X2Y2]; 
     else
-        do
+        title('Reference Image', 'Color', 'Black');
+        done = true;
     end
 end
-plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3); 
-
+% figure(refFrm_figHandle);       
+% hold on;
+% j = 1;
+% for i = 1:2:size(refFrm_point,1)
+%     plot(refFrm_point(i,1), refFrm_point(i, 2),'o','Color','Yellow', 'LineWidth', 3);
+%     plot(refFrm_point(i + 1, 1), refFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
+% end
+%% Estimate Geometric Transformation
+tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
+outImg = imwarp(curFrm_strip{1,2}, tform);
+figure;
+imshow(outImg);

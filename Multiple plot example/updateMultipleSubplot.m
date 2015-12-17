@@ -1,45 +1,53 @@
 close all; clear;
 %% Read in image
-img = imread('DSC_0764.JPG');
-img2 = imread('DSC_0765.JPG');
+refFrm = imread('DSC_0764.JPG');                    % Reference image
 
-%% Create two figures with subplots
-sp1 = subplot(1,2,1);
-imshow(img);
-title('Original');
-sp2 = subplot(1,2,2);
-imshow(img2);
-title('Moving');
-truesize;
+% Define how to cut an image
+num_vertStrip = 2;                                  % Number of vertical strips
+num_horzStrip = 1;                                  % Number of horizontal strips
+num_gridStrip = num_vertStrip * num_horzStrip;      % Number of grids in image
+num_chn = 3;                                        % Number of channel in the image 
 
-% Here we store points selected by the users
-refPoint = [];
-movingPoint = [];
-for i = 1:3
-    
-    %% Switch to subplot(sp1) handle 
-    
-    % Wait for user to select points
-    subplot(sp1), hold on;
-    [PtRefX,PtRefY] = getpts; 
-    groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
-    groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
-    refPoint(i:i+1, 1:2) = [groundRef_X1Y1; groundRef_X2Y2];
-    % Plot the points and a line connection
-    plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-    plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Yellow', 'LineWidth', 3);
-    line(PtRefX,PtRefY, 'Color', 'Blue', 'LineWidth', 3);
-    
-    %% Switch to subplot(sp2) handle
-    
-    % Wait for user to select points
-    subplot(sp2), hold on;
-    [PtCurX,PtCurY] = getpts;
-    groundCur_X1Y1 = [PtCurX(1), PtCurY(1)];
-    groundCur_X2Y2 = [PtCurX(2), PtCurY(2)];
-    movingPoint(i:i+1, 1:2) = [groundCur_X1Y1; groundCur_X2Y2];
-    % Plot the points and a line connection    
-    plot(groundCur_X1Y1(1),groundCur_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-    plot(groundCur_X2Y2(1),groundCur_X2Y2(2),'o','Color','Yellow', 'LineWidth', 3);
-    line(PtCurX,PtCurY, 'Color', 'Blue', 'LineWidth', 3);
+% Create parameter for cutting image into strips
+num_col_strips = repmat(size(refFrm,2)/num_vertStrip,[1 num_vertStrip]);
+num_row_strips = repmat(size(refFrm,1)/num_horzStrip,[1 num_horzStrip]);
+curFrm_strip = mat2cell(refFrm, num_row_strips, num_col_strips, num_chn);
+
+%% Construct figure and windows
+refFrm_figHandle = figure;      % Create refFrm figure handle
+figure(refFrm_figHandle);       % Switch to refFrm handle
+imshow(refFrm), truesize;       % Display the refFrm
+title('Reference Image');       % Title
+curFrm_figHandle = figure;      % Create curFrm figure handle
+figure(curFrm_figHandle);       % Switch to curFrm handle
+
+%% Create the sub-windows for each image strip
+for i = 1:num_gridStrip
+    curFrm_figHandle(i) = subplot(size(curFrm_strip, 1),size(curFrm_strip, 2),i);
+    title(['Moving', num2str(i)]);
+end
+
+%% Display image in each sub-window
+done = false;       % Boolean indicator
+plot_row = 1;       % Row index
+plot_col = 1;       % Column index
+plot_index = 1;     % Plot index
+
+% Loop through the entire curFrm figure handle
+while(not(done))
+    % Switch subplot handle, show the image
+    subplot(curFrm_figHandle(plot_index));
+    imshow(curFrm_strip{plot_row,plot_col}), truesize;
+    plot_col = plot_col + 1;
+    % If column reach the end, go to next row
+    if (plot_col > size(curFrm_strip,2))
+        plot_row = plot_row + 1;
+        plot_col = 1;
+        % Done with plotting, exit the loop
+        if (plot_row > size(curFrm_strip,1))
+            done = true;
+        end
+    end
+    % Plot index will increment by 1 at each iteration
+    plot_index = plot_index + 1;
 end

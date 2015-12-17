@@ -1,2 +1,0 @@
-figure;
-[X,Y] = getpts;

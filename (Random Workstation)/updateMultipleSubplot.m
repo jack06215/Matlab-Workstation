@@ -1,7 +1,7 @@
 close all; clear;
 %% Read in image
-refFrm = imread('DSC_0765.JPG');                    % Reference image
-curFrm = imread('DSC_0764.JPG');                    % Curent image
+refFrm = imread('curFrm.png');                    % Reference image
+curFrm = imread('outImg.png');                    % Curent image
 
 %% Define how to cut an image
 num_vertStrip = 2;                                  % Number of vertical strips
@@ -86,13 +86,13 @@ while(not(done))
         % Store the pixel location
         curFrm_point = [curFrm_point; realCoor_X1Y1]; 
         curFrm_point = [curFrm_point; realCoor_X2Y2]; 
-%         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-%         plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);      
-%         % Switch to refFrm handle and draw result
-%         figure(curFrm_figHandle);       
-%         hold on;
-%         plot(realCoor_X1Y1(1),realCoor_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-%         plot(realCoor_X2Y2(1),realCoor_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
+        plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
+        plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);      
+        % Switch to refFrm handle and draw result
+        figure(curFrm_figHandle);       
+        hold on;
+        plot(realCoor_X1Y1(1),realCoor_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
+        plot(realCoor_X2Y2(1),realCoor_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
     else
         subplot(curFrm_subplotHandle(plot_index)), hold on;
         title(['Strip[', num2str(plot_index), ']'], 'Color', 'Black');
@@ -110,13 +110,13 @@ while(not(done))
         end
     end
  end
-figure(curFrm_figHandle);       
-hold on;
-j = 1;
-for i = 1:2:size(curFrm_point,1)
-    plot(curFrm_point(i,1), curFrm_point(i, 2),'o','Color','Yellow', 'LineWidth', 3);
-    plot(curFrm_point(i + 1, 1), curFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
-end
+% figure(curFrm_figHandle);       
+% hold on;
+% j = 1;
+% for i = 1:2:size(curFrm_point,1)
+%     plot(curFrm_point(i,1), curFrm_point(i, 2),'o','Color','Yellow', 'LineWidth', 3);
+%     plot(curFrm_point(i + 1, 1), curFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
+% end
 %% Obtain point from reference frame
 figure(refFrm_figHandle);               % Switch to refFrm figure handle
 hold on;
@@ -128,8 +128,8 @@ while(not(done))
     if (size(PtRefX,1) > 0 & size(PtRefY,1) > 0)
         groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
         groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
-%         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
-%         plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
+        plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
+        plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
         refFrm_point = [refFrm_point; groundRef_X1Y1]; 
         refFrm_point = [refFrm_point; groundRef_X2Y2]; 
     else
@@ -137,15 +137,15 @@ while(not(done))
         done = true;
     end
 end
-figure(refFrm_figHandle);       
-hold on;
-j = 1;
-for i = 1:2:size(refFrm_point,1)
-    plot(refFrm_point(i,1), refFrm_point(i, 2),'o','Color','Yellow', 'LineWidth', 3);
-    plot(refFrm_point(i + 1, 1), refFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
-end
-% %% Estimate Geometric Transformation
-% tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
-% outImg = imwarp(curFrm_strip{1,2}, tform);
-% figure;
-% imshow(outImg);
+% figure(refFrm_figHandle);       
+% hold on;
+% j = 1;
+% for i = 1:2:size(refFrm_point,1)
+%     plot(refFrm_point(i,1), refFrm_point(i, 2),'o','Color','Yellow', 'LineWidth', 3);
+%     plot(refFrm_point(i + 1, 1), refFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
+% end
+%% Estimate Geometric Transformation
+tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
+outImg = imwarp(curFrm_strip{1,2}, tform);
+figure;
+imshow(outImg);
