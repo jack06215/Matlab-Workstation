@@ -2,8 +2,8 @@ close all;
 ImgA = imread('curFrm.png');
 ImgB = imread('outImg.png');
 yy = 0;
-point_i = [329,256;323,298;347,259;345,304];
-point_iPrime = [442 + yy,309 + yy;435 + yy,353 + yy;463 + yy,316 + yy;460 + yy,357 + yy];      
+point_i = [328,256;325,302;348,261;344,302]
+point_iPrime = [444,310;440,353;465,314;461,359];      
 tform = estimateGeometricTransform(point_i, point_iPrime, 'affine');
 figure, imshow(ImgA), hold on;
 plot(point_i(:,1), point_i(:,2), '*', 'Color', 'Red');
