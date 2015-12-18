@@ -3,7 +3,7 @@ clear;
 close all;
 
 % Read in an image
-img = imread('Sample Images\fig1.jpg');
+img = imread('../(Sample Images)\fig1.jpg');
 
 % This is the homography matrix
 m =[1, -0.4, 0

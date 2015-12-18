@@ -1,6 +1,6 @@
 close all;
-ImgA = imread('curFrm.png');
-ImgB = imread('outImg.png');
+ImgA = imread('../(Sample Images)/curFrm.png');
+ImgB = imread('../(Sample Images)/outImg.png');
 yy = 0;
 point_i = [329,256;323,298;347,259;345,304];
 point_iPrime = [442 + yy,309 + yy;435 + yy,353 + yy;463 + yy,316 + yy;460 + yy,357 + yy];      
