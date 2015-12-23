@@ -1,7 +1,7 @@
 close all; clear;
 %% Read in image
-refFrm = imread('curFrm.png');                    % Reference image
-curFrm = imread('outImg.png');                    % Curent image
+refFrm = imread('..\(Sample Images)\curFrm.png');                    % Reference image
+curFrm = imread('..\(Sample Images)\outImg.png');                    % Curent image
 
 %% Define how to cut an image
 num_vertStrip = 2;                                  % Number of vertical strips
@@ -27,6 +27,7 @@ title('Current Image');                 % Title
 
 curFrm_strip_figHandle = figure;        % Create curFrm strip handle
 figure(curFrm_strip_figHandle);         % Switch to curFrm strip handle
+curFrm_subplotHandle = zeros(num_gridStrip);
 
 %% Create the sub-windows for each image strip
 for i = 1:num_gridStrip
@@ -65,7 +66,11 @@ done = false;       % Boolean indicator
 plot_row = 1;       % Row index
 plot_col = 1;       % Column index
 plot_index = 1;     % Plot index
-curFrm_point = [];
+DEFAULT_SIZE = 100;
+list_size = DEFAULT_SIZE;
+curFrm_point = zeros(DEFAULT_SIZE, 2);
+% curFrm_point = [];
+curFrm_ptr = 1;
 while(not(done))
     % disp(['[', num2str(plot_row), ', ', num2str(plot_col), ']']);
     figure(curFrm_strip_figHandle);
@@ -73,10 +78,9 @@ while(not(done))
     title('Select Point HERE', 'Color', 'Red');
     % Wait for user to select points
     [PtRefX,PtRefY] = getpts;
-    if (size(PtRefX,1) > 0 & size(PtRefY,1) > 0)
+    if (size(PtRefX,1) > 0 && size(PtRefY,1) > 0)
         groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
         groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
-
         % Offset the image strip's coordinate system to match up with refFrm
         col_offset = sum(num_col_strips(1:plot_col)) - num_col_strips(1);
         row_offset = sum(num_row_strips(1:plot_row)) - num_row_strips(1);
@@ -84,8 +88,12 @@ while(not(done))
         realCoor_X2Y2 = groundRef_X2Y2 + [col_offset, row_offset];
 
         % Store the pixel location
-        curFrm_point = [curFrm_point; realCoor_X1Y1]; 
-        curFrm_point = [curFrm_point; realCoor_X2Y2]; 
+        curFrm_point(curFrm_ptr,:) = realCoor_X1Y1;
+        curFrm_point(curFrm_ptr + 1,:) = realCoor_X2Y2;
+        curFrm_ptr = curFrm_ptr + 2;
+%         curFrm_point = [curFrm_point;realCoor_X1Y1];
+%         curFrm_point = [curFrm_point;realCoor_X2Y2];
+        
         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
         plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);      
         % Switch to refFrm handle and draw result
@@ -109,7 +117,13 @@ while(not(done))
             end
         end
     end
- end
+    % add new block of memory if needed
+    if( curFrm_ptr+(DEFAULT_SIZE/10) > curFrm_ptr )  % less than 10%*BLOCK_SIZE free slots
+        list_size = list_size + DEFAULT_SIZE;       % add new BLOCK_SIZE slots
+        curFrm_point(curFrm_ptr+1:list_size,:) = 0;
+    end
+end
+curFrm_point(curFrm_ptr:end,:) = []; 
 % figure(curFrm_figHandle);       
 % hold on;
 % j = 1;
@@ -121,22 +135,36 @@ while(not(done))
 figure(refFrm_figHandle);               % Switch to refFrm figure handle
 hold on;
 done = false;
-refFrm_point = [];
+DEFAULT_SIZE = 100;
+list_size = DEFAULT_SIZE;
+refFrm_point = zeros(DEFAULT_SIZE, 2);
+% refFrm_point = [];
+refFrm_ptr = 1;
 while(not(done))
     title('Select Point HERE', 'Color', 'Red');
     [PtRefX,PtRefY] = getpts;
-    if (size(PtRefX,1) > 0 & size(PtRefY,1) > 0)
+    if (size(PtRefX,1) > 0 && size(PtRefY,1) > 0)
         groundRef_X1Y1 = [PtRefX(1), PtRefY(1)];
         groundRef_X2Y2 = [PtRefX(2), PtRefY(2)];
         plot(groundRef_X1Y1(1),groundRef_X1Y1(2),'o','Color','Yellow', 'LineWidth', 3);
         plot(groundRef_X2Y2(1),groundRef_X2Y2(2),'o','Color','Cyan', 'LineWidth', 3);
-        refFrm_point = [refFrm_point; groundRef_X1Y1]; 
-        refFrm_point = [refFrm_point; groundRef_X2Y2]; 
+        refFrm_point(refFrm_ptr,:) = groundRef_X1Y1;
+        refFrm_point(refFrm_ptr + 1,:) = groundRef_X2Y2;
+        refFrm_ptr = refFrm_ptr + 2;
+%         refFrm_point = [refFrm_point; groundRef_X1Y1]; 
+%         refFrm_point = [refFrm_point; groundRef_X2Y2];
+        
     else
         title('Reference Image', 'Color', 'Black');
         done = true;
     end
+    % add new block of memory if needed
+    if( refFrm_ptr+(DEFAULT_SIZE/10) > refFrm_ptr )  % less than 10%*BLOCK_SIZE free slots
+        list_size = list_size + DEFAULT_SIZE;       % add new BLOCK_SIZE slots
+        refFrm_point(refFrm_ptr+1:list_size,:) = 0;
+    end
 end
+refFrm_point(refFrm_ptr:end,:) = [];
 % figure(refFrm_figHandle);       
 % hold on;
 % j = 1;
@@ -145,7 +173,12 @@ end
 %     plot(refFrm_point(i + 1, 1), refFrm_point(i + 1, 2),'o','Color','Cyan', 'LineWidth', 3);
 % end
 %% Estimate Geometric Transformation
-tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
-outImg = imwarp(curFrm_strip{1,2}, tform);
-figure;
-imshow(outImg);
+if (size(curFrm_point,1) > 0 && size(refFrm_point, 1) > 0)
+    tform = estimateGeometricTransform(refFrm_point, curFrm_point, 'affine');
+    outImg = imwarp(curFrm_strip{1,2}, tform);
+    figure;
+    imshow(outImg);
+else
+    close all;
+    error('Empty vector is not allowed');
+end

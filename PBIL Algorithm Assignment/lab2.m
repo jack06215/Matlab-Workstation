@@ -16,9 +16,9 @@ CostMatrix = [1  2  3  4  5  6  7  8;
 %   Some variables
 nbGeneration            = 100;
 nbSample                = 100;
-learningRate            = 0.04;
+learningRate            = 0.05;
 mutationProbability     = 0.1;
-mutationShift           = 0.2;
+mutationShift           = 2;
 %   Some storage vector
 probabilityVector       = ones (1, 36) * 0.5;
 minCostVector           = zeros(nbGeneration, 1);
