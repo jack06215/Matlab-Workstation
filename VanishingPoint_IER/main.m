@@ -1,7 +1,9 @@
 clear, close all;
 curFrm = imread('Scene\DSC_0765.JPG');
 refFrm = imread('Scene\DSC_0764.JPG');
-
+% curFrm = imread('curFrm.png');
+% refFrm = imread('outImg.png');
+% refFrm = imresize(refFrm, [size(curFrm, 1), size(curFrm, 2)]);
 %% Line segment + VP detection
 refFrm_line = getLines(rgb2gray(refFrm), 40);
 curFrm_line = getLines(rgb2gray(curFrm), 40);
@@ -40,7 +42,7 @@ title('REF');
 % for i = 1:size(refFrm_line,1)
 %      plot([refFrm_line(i,3), refFrm_line(i,4)], [refFrm_line(i,1), refFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
-%draw(refFrm,refFrm_vp,zeros(3),refFrm_line);
+draw(refFrm,refFrm_vp,zeros(3),refFrm_line);
 % 
 figure;
 imshow(curFrm);
@@ -50,7 +52,7 @@ title('CUR');
 % for i = 1:size(curFrm_line,1)
 %      plot([curFrm_line(i,3), curFrm_line(i,4)], [curFrm_line(i,1), curFrm_line(i,2)], '-', 'Color', 'Blue');
 % end
-%draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
+draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
 % 
 %% Triamgule measurement method
 refFrm_movingPts = vertcat(refFrm_line(:,[3,1]), refFrm_line(:,[4,2]));
@@ -61,5 +63,5 @@ outImg = imwarp(refFrm, tform);
 figure;
 imshow(outImg);
 title('Warp');
-imwrite(curFrm, 'curFrm.png');
-imwrite(outImg, 'outImg.png');
+% imwrite(curFrm, 'curFrm.png');
+% imwrite(outImg, 'outImg.png');

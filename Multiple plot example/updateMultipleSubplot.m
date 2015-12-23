@@ -1,6 +1,6 @@
 close all; clear;
 %% Read in image
-refFrm = imread('DSC_0764.JPG');                    % Reference image
+refFrm = imread('outImg.png');                    % Reference image
 
 % Define how to cut an image
 num_vertStrip = 2;                                  % Number of vertical strips
@@ -38,6 +38,7 @@ while(not(done))
     % Switch subplot handle, show the image
     subplot(curFrm_figHandle(plot_index));
     imshow(curFrm_strip{plot_row,plot_col}), truesize;
+    imwrite(curFrm_strip{plot_row,plot_col}, ['strip_', num2str(plot_index), '.png']);
     plot_col = plot_col + 1;
     % If column reach the end, go to next row
     if (plot_col > size(curFrm_strip,2))

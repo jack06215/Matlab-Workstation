@@ -6,6 +6,7 @@ for j = 1:size(vp0,1)
         plot([0 3000*vp0(j,1)] + size(f,2)/2,[0 3000*vp0(j,2)] + size(f,1)/2,'-p','color',myColor(j));
     else
         plot([0 vp0(j,1)] + size(f,2)/2,[0 vp0(j,2)] + size(f,1)/2,'-','color',myColor(j));
+        plot([0 vp0(j,1)] + size(f,2)/2,[0 vp0(j,2)] + size(f,1)/2,'o','color',myColor(j));
     end
 end
 
