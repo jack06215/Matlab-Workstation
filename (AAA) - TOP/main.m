@@ -1,6 +1,8 @@
 clear, close all;
 curFrm = imread('..\(Sample Images)\DSC_0765.JPG'); % Current frame 
 modelFrm = imread('..\(Sample Images)\DSC_0764.JPG'); % Model frame (to be mapped)
+% curFrm = imread('..\(Sample Images)\outImg.png'); % Current frame 
+% modelFrm = imread('..\(Sample Images)\DSC_0761.JPG'); % Model frame (to be mapped)
 %% VP Detection, grabbed from below implementation
 % Vanishing Point Detection Using 1D Histogram by Dividing Image Plane into Interior and Exterior Regions
 % Author:	Bo Li, Kun Peng, Xianghua Ying, Hongbin Zha
@@ -16,8 +18,8 @@ figure;
 imshow(curFrm);
 title('Current Frame');
 
-% draw(modelFrm,modelFrm_vp,zeros(3),modelFrm_line);
-% draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
+draw(modelFrm,modelFrm_vp,zeros(3),modelFrm_line);
+draw(curFrm,curFrm_vp,zeros(3),curFrm_line);
 
 
 %% Triamgule measure & warping
