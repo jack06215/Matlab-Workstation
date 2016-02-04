@@ -33,6 +33,7 @@ n_iters = 100; % # of iterations for the LM
 
 a_est = a0;
 b_est = b0;
+lamda = 0;
 
 
 for it = 1:n_iters

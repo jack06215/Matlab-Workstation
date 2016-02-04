@@ -1,1 +1,1 @@
-A = randIndex(2,8);
+A = randIndex(90,5);
