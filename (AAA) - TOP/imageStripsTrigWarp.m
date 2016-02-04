@@ -12,6 +12,7 @@ close all;
 % Read image from file
 curFrm = imread('..\(Sample Images)\curFrm.png');
 outImg = imread('..\(Sample Images)\outImg.png');
+outImg_orig = imread('..\(Sample Images)\DSC_0764.JPG');
 
 % Two manually chosen + VP points
 curFrm_VP = [328,251; 322,301; 
@@ -64,6 +65,7 @@ tform = estimateGeometricTransform(outImg_pts, modelFrm_estimatePoints, 'affine'
 ImgB = imwarp(outImg, tform);
 % 
 figure, imshow(ImgB);
+figure, imshow(outImg_orig);
 % title(['dim: ', num2str(size(ImgB, 1)), ' x ', num2str(size(ImgB, 2))]);
 % 
 % 

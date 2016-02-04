@@ -6,7 +6,7 @@ curFrm_line = getLines(rgb2gray(curFrm), 40);
 
 
 
-
+%% Remove half of the feature points at LHS
 row_del_index = removeSomeEntry(refFrm_line, refFrm);
 refFrm_line(row_del_index,:) = [];
 row_del_index = removeSomeEntry(curFrm_line, curFrm);
@@ -17,7 +17,7 @@ refFrm_movingPts = vertcat(refFrm_line(:,[3,1]), refFrm_line(:,[4,2]));
 
 csvwrite('..\(Sample Images)\refFrm_line.csv', refFrm_movingPts);
 csvwrite('..\(Sample Images)\curFrm_line.csv', curFrm_movingPts);
-
+%% Show result
 figure;
 imshow(refFrm), hold on;
 title('Reference');

@@ -1,0 +1,1 @@
+A = randIndex(2,8);
