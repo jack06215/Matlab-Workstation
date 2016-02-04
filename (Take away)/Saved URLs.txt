@@ -1,0 +1,20 @@
+RANSAC algorithm with example of finding homography
+http://au.mathworks.com/matlabcentral/fileexchange/30809-ransac-algorithm-with-example-of-finding-homography
+
+Camera Calibration (Page 1-2)
+http://www.maths.lth.se/matematiklth/personal/calle/datorseende13/notes/forelas3.pdf
+
+Implementation of "Shape from Angular Regularity"
+http://mhasanjafry.weebly.com/uploads/4/1/5/9/41596759/sfar_project_report.pdf
+
+Plane Coordinate Transformations (Visual demo)
+https://www.e-education.psu.edu/geog482spring2/c2_p18.html
+
+Shape from Angle Regularity (This is IMPORTANT one)
+https://cvlab.lums.edu.pk/zaheer2012shape/
+
+Github - ofxCorrectPerspective (This is IMPORTANT one)
+https://github.com/harisusmani/ofxCorrectPerspective
+
+LSD-OpenCV-MATLAB
+https://github.com/primetang/LSD-OpenCV-MATLAB
