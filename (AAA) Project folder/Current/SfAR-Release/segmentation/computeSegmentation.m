@@ -1,4 +1,4 @@
-function [im,K,center,LS,LS_c,X,Ladj,hFig,L] = computeSegmentation(impath,talk)
+function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers] = computeSegmentation(impath,talk)
 
 %% This function computes segmentation for the given image.
 %
