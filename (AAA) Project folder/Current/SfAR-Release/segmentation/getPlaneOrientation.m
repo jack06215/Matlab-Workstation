@@ -1,4 +1,4 @@
-function [X,inliers] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
+function [X,inliers,numhyp] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
 %GETPLANEORIENTATION 
 % inputs
 % Ladj: adjacency matrix for line segments

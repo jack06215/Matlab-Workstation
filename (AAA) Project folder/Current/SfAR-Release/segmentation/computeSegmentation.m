@@ -1,4 +1,4 @@
-function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers] = computeSegmentation(impath,talk)
+function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp] = computeSegmentation(impath,talk)
 
 %% This function computes segmentation for the given image.
 %
@@ -36,16 +36,16 @@ maxDataTrials = getParameter('maxDataTrials');
 poptype = getParameter('poptype');
 
 %% Read the input, detect lines, preprocess
-[im,K,center] = cameraInputs(impath,scaleimageflag);
-% im=imread(impath);
-% K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
-% % center = [320;180]; % Landscape
-% center = [180;320];   % Protrait
+% [im,K,center] = cameraInputs(impath,scaleimageflag);
+im=imread(impath);
+K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
+center = [size(im,2)/2;size(im,1)/2]; % Landscape
+% center = [size(im,1)/2;size(im,2)/2];   % Protrait
 [LS,Ladj,LS_c,L,hFig] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);
 
 %% Form plane orientation hypotheses
 disp('into plane orientation');
-[X,inliers] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
+[X,inliers,numhyp] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
 end
 
 

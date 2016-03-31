@@ -1,6 +1,6 @@
 %% Obtain the homography that warp a image plane to its frontal view
 % Obtain alpha and beta rotation parameters of the first plane
-ax=X(1);ay=X(2);
+ax=X(7);ay=X(8);
 % Make the rotation matrix
 R1=makehgtform('xrotate',ax,'yrotate',ay); 
 R1=R1(1:3,1:3);
