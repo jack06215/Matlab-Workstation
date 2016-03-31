@@ -1,17 +1,17 @@
-% %% Set up system environment
-% addpath(genpath('.'))               % Adding all subfolders to path
-% ccc;                                % Clear up everything
-% impath = 'data\DSC_0002.jpg';       % Set the path of the image
-% talk = getParameter('talk');        % Flag for internediate output
-% saveFig = getParameter('saveFig');  % Flag for saving figure
-% if ~exist(impath,'file')            % check if the image file exists
-%     error('Please enter a valid image path');
-% end
-% warning off all;                    % Turn off warnings
-% %% Main algorithm pipeline starts from here
-% tic;
-% [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers] = computeSegmentation(impath,talk);
-% toc;
+%% Set up system environment
+addpath(genpath('.'));              % Adding all subfolders to path
+ccc;                                % Clear up everything
+impath = 'data\DSC_0760.jpg';       % Set the path of the image
+talk = getParameter('talk');        % Flag for internediate output
+saveFig = getParameter('saveFig');  % Flag for saving figure
+if ~exist(impath,'file')            % check if the image file exists
+    error('Please enter a valid image path');
+end
+warning off all;                    % Turn off warnings
+%% Main algorithm pipeline starts from here
+tic;
+[im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers] = computeSegmentation(impath,talk);
+toc;
 % %% Save figures screeshot
 % if saveFig
 %     for i = 1:length(hFig)
@@ -19,11 +19,11 @@
 %         print(hFig(i), '-djpeg', name);
 %     end
 % end
-%% Random testing / experiment code
-close all; clc;
-planeSeg = 2;
-A = inliers{1,planeSeg};
-c = simocost_HR(0,X(:,planeSeg),L,K,A,talk);
+% %% Random testing / experiment code
+% close all; clc;
+% planeSeg = 2;
+% A = inliers{1,planeSeg};
+% c = simocost_HR(0,X(:,planeSeg),L,K,A,talk);
 
 %% Old testing / developing code
 % ******** Horizontal / Vertical assumption && Cost matrix ********
