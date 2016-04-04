@@ -1,4 +1,4 @@
-function [x,currinliers]=nextRANSAChypo(L,remadj,alladj,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
+function [x,currinliers,x3]=nextRANSAChypo(L,remadj,alladj,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
 
 % hypo2 uses all adjacent pairs to compute inliers in the EM loop but still
 % uses only remaining adjacent pairs in RANSAC (need to be changed in RANSAC)
@@ -8,6 +8,7 @@ function [x,currinliers]=nextRANSAChypo(L,remadj,alladj,K,highthresh,numPairs,ma
 
 % EM on inliers and homography
 [tempH,tempx]=rectifyOrthoR(L,K,currinliers,x,0);
+[H3,x3] = rectifyInplaneR(L,K,currinliers,0,tempx,talk);
 tempinliers=findHinliers(tempH,L,highthresh).*alladj;
 while sum(sum(tempinliers))>sum(sum(currinliers))
     if talk
@@ -18,6 +19,7 @@ while sum(sum(tempinliers))>sum(sum(currinliers))
     
     % fit new model and inliers
     [tempH,tempx]=rectifyOrthoR(L,K,currinliers,x,1);
+    [H3,x3] = rectifyInplaneR(L,K,currinliers,x3(3),tempx,talk);
     tempinliers=findHinliers(tempH,L,highthresh).*alladj;
 end
 

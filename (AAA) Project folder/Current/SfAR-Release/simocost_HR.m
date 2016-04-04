@@ -44,9 +44,4 @@ for i=1:size(ar,1)
     end
     C(ar(i), ac(i)) = inplane_cost;
 end
-
-if (talk)
-    disp('In-plane Cost matrix');
-    disp(C)
-end
 c = sum(sum(C));

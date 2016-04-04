@@ -1,4 +1,4 @@
-function [X,inliers,numhyp] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
+function [X,inliers,numhyp,X3] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk)
 %GETPLANEORIENTATION 
 % inputs
 % Ladj: adjacency matrix for line segments
@@ -13,13 +13,15 @@ Ladj=triu(Ladj);
 
 remadj=Ladj;
 X=zeros(2,0);
+X3=zeros(3,0);
 numhyp=0;
 inliers=cell(0);
 
 while 1
-    [x,currinliers]=nextRANSAChypo(L,remadj,Ladj,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
+    [x,currinliers,x3]=nextRANSAChypo(L,remadj,Ladj,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
     inliers=[inliers,currinliers];
     X=[X,x];
+    X3=[X3,x3];
     remadj=remadj-currinliers;
     numhyp=numhyp+1;
 

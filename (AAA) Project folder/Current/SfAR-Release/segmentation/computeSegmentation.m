@@ -1,4 +1,4 @@
-function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp] = computeSegmentation(impath,talk)
+function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp,x3] = computeSegmentation(impath,talk)
 
 %% This function computes segmentation for the given image.
 %
@@ -45,7 +45,7 @@ center = [size(im,2)/2;size(im,1)/2]; % Landscape
 
 %% Form plane orientation hypotheses
 disp('into plane orientation');
-[X,inliers,numhyp] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
+[X,inliers,numhyp,x3] = getPlaneOrientation(Ladj,L,K,highthresh,numPairs,maxTrials,maxDataTrials,poptype,talk);
 end
 
 

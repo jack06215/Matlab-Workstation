@@ -10,7 +10,7 @@ end
 warning off all;                    % Turn off warnings
 %% Main algorithm pipeline starts from here
 tic;
-[im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp] = computeSegmentation(impath,talk);
+[im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp,X3] = computeSegmentation(impath,talk);
 toc;
 % %% Save figures screeshot
 % if saveFig
