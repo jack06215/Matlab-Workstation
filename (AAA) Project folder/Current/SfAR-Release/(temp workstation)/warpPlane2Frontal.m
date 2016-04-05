@@ -6,6 +6,7 @@ img_center = [1,0, -center(1); 0,1, -center(2); 0,0,1];
 H1= K*(R1/K)*img_center;
 %% Calclating resultant translation and scale
 Rect = [0,0,1; size(im,2),0,1; size(im,2),size(im,1),1; 0,size(im,1),1]';
+Rect_out(1,1) = Rect_out(1,1) - Rect_out(1,1);
 Rect_prespective = homoTrans(H1, Rect);
 %% Fix scaling, based on width
 scale_fac = abs((max(Rect_prespective(1,2), Rect_prespective(1,3))- min(Rect_prespective(1,1), Rect_prespective(1,4)))/size(im,2));
