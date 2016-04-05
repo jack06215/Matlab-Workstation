@@ -15,14 +15,12 @@ center = [size(im,2)/2; size(im,1)/2];
 
 %% Construct homography matrix
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
-% Rotation parameter on each hypothesis plane
 X = [0.144172003541432,0.161887680849420,-0.099848173348471,0.138800848766926;
     -0.776721177515494,0.719557697158842,1.123899011861867,-0.804358007244892];
-% Homography parameter back to frontal-view
 ax = X(1,1);ay=X(2,1);
 R = makehgtform('xrotate',ax,'yrotate',ay); R=R(1:3,1:3);
 H = K*R*inv(K);
-
+tform = projective2d(H');
 %% Line boundary defined by users in the format of [x1,y1;x2,y2]
 % 1st Line Segment
 ls1 = [lsX(1); lsY(1); lsX(2); lsY(2)];     
@@ -68,7 +66,6 @@ plot([intpt(1), ls1(1)], [intpt(2), ls1(2)], 'Color', 'Blue', 'LineWidth', 3);
 hold off;
 
 %% Warping
-tform = projective2d(H');
 im_warp = imwarp(im, tform);
 
 %% Original-prespective pixel mapping
@@ -87,7 +84,7 @@ ptYp = AA(2,:) - min(AA(2,:)) + 1;
 ptXp = AA(1,:) - min(AA(1,:)) + 1;
 ptXYp = [ptXp; ptYp];
 
-%% Pixel index to coordinate conversion
+%% Pixel coordinate to index conversion
 % ind(pixel_location) = y + (x - 1) * y_stride
 ls1a_ind = floor(ls1(1)) + ((floor(ls1(2)) - 1) * sz(2));
 ls1b_ind = floor(ls1(3)) + ((floor(ls1(4)) - 1) * sz(2));
