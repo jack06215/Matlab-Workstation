@@ -66,7 +66,7 @@ plot([intpt(1), ls1(1)], [intpt(2), ls1(2)], 'Color', 'Blue', 'LineWidth', 3);
 hold off;
 
 %% Warping
-im_warp = imwarp(im, tform);
+im_warp = my_imwarp(im, H);
 
 %% Original-prespective pixel mapping
 % Find the size of img
