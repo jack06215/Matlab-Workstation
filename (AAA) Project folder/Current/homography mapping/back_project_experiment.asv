@@ -7,6 +7,7 @@ im = imread('DSC_0760.JPG');
 %% Pre-defined parameters from previous program
 % Image center
 center = [size(im,2)/2; size(im,1)/2];
+
 %% Construct homography matrix
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
 X = [0.144290146310480,0.161245008361210,-0.502297992743877;-0.780126182696621,0.722906252917495,1.068252984437994;0.127068370467084,-0.144993347333665,0.094242399794410];
@@ -15,6 +16,7 @@ H = H_form.T;
 %% Warping
 im_warp = imwarp(im, H_form);
 % im_warp = my_imwarp(im, H');
+
 %% Look-up table for original-prespective pixel mapping
 % Find the size of img
 sz = size(im);
