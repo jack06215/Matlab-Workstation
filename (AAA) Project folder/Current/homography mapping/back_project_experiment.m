@@ -21,9 +21,9 @@ X = [0.144290146310480,0.161245008361210,-0.502297992743877;-0.780126182696621,0
 % H = K*R*inv(K);
 H_form = computeFrontalH(X(:,1), center, K, im);
 H = H_form.T;
-% %% Warping
-% % im_warp = imwarp(im, H_form);
-% im_warp = my_imwarp(im, H');
+%% Warping
+% im_warp = imwarp(im, H_form);
+im_warp = my_imwarp(im, H');
 % 
 % %% Line boundary defined by users in the format of [x1,y1;x2,y2]
 % % 1st Line Segment
