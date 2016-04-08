@@ -4,7 +4,7 @@ addpath(genpath('.'));
 close all; clc;
 %% Waiting for user input
 im = imread('Looking_Up_at_Empire_State_Building.JPG');
-im_obj = imread('fig1.jpg');
+im_obj = imread('12941026_1.png');
 im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
                 1,1,size(im_obj,1),size(im_obj,1)];
 %% Pre-defined parameters from previous program
@@ -120,7 +120,7 @@ img_enplace(pixel_index + (2*img_stride)) = im_obj_warp(2*img_content_stride + o
 
 %% Show the points back-projection result
 % Show the points selected by user in the prespective view
-figure, subplot(1,2,1);
+figure, subplot(2,1,1);
 imshow(im_warp);
 hold on;
 title('4 points selected by the user in frontal-parallel view');
@@ -130,7 +130,7 @@ plot(ptXp(3), ptYp(3), 'x', 'Color', 'yellow', 'LineWidth', 3);
 plot(ptXp(4), ptYp(4), 'x', 'Color', 'magenta', 'LineWidth', 3);
 hold off;
 % Back-project points to its original view
-subplot(1,2,2);
+subplot(2,1,2);
 imshow(im);
 hold on;
 title('4 points back-project to its original view');

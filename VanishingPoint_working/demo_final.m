@@ -1,6 +1,6 @@
 close all;
 %% Read image and convert it to grayscale
-refImg = imread('../(Sample Images)/DSC_0764.JPG');
+refImg = imread('il_570xN.322640763.jpg');
 currentImg = imread('../(Sample Images)/DSC_0765.JPG');
 refImg_gray = rgb2gray(refImg);
 currentImg_gray = rgb2gray(currentImg);
