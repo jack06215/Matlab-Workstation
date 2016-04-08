@@ -14,6 +14,7 @@ m =[cosd(45), sind(45), 0;
 tic;
 affineMat = affine2d(m);
 imgNew = imwarp(img, affineMat);
+imgNew = imresize(imgNew, 0.3);
 toc;
 imgNewRef = imref2d(size(imgNew));
 
