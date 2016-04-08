@@ -1,7 +1,7 @@
 %% Set up system environment
 addpath(genpath('.'));              % Adding all subfolders to path
 ccc;                                % Clear up everything
-impath = 'data\DSC_0760.jpg';       % Set the path of the image
+impath = 'data\Looking_Up_at_Empire_State_Building.jpg';       % Set the path of the image
 talk = getParameter('talk');        % Flag for internediate output
 saveFig = getParameter('saveFig');  % Flag for saving figure
 if ~exist(impath,'file')            % check if the image file exists
