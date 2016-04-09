@@ -3,8 +3,8 @@ addpath(genpath('.'));
 % ccc;
 close all; clc;
 %% Waiting for user input
-im = imread('Looking_Up_at_Empire_State_Building.JPG');
-im_obj = imread('12941026_1.png');
+im = imread('Garfield_Building_Detroit.JPG');
+im_obj = imread('11270691_828.jpg');
 im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
                 1,1,size(im_obj,1),size(im_obj,1)];
 %% Pre-defined parameters from previous program
@@ -12,8 +12,8 @@ im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
 center = [size(im,2)/2; size(im,1)/2];
 %% Construct homography matrix
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
-X = [1.08962619615982,1.03791211223488;-0.0257231312919776,0.0103331796180323;0.00228632359053533,-0.0263641651694917];
-H_form = computeFrontalH(X(:,1), center, K, im);
+X = [0.150029936810503,0.143176210731948;-0.595200087397920,0.381606944802646;0.131683946642265,-0.090483451186387];
+H_form = computeFrontalH(X(:,2), center, K, im);
 H = H_form.T;
 %% Warping
 im_warp = imwarp(im, H_form);
