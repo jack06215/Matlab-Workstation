@@ -40,6 +40,7 @@ poptype = getParameter('poptype');
 im=imread(impath);
 % K = [498.949848064801,0,0;0,498.949848064801,0;0,0,1];
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
+% K = [1,0,0;0,1,0;0,0,1];
 center = [size(im,2)/2;size(im,1)/2]; % Landscape
 % center = [size(im,1)/2;size(im,2)/2];   % Protrait
 [LS,Ladj,LS_c,L,hFig] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);
