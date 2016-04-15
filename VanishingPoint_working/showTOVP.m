@@ -2,16 +2,16 @@ function [] = showTOVP( g, f, vanishing, point, foc )
 figure,
 imshow(g)
 hold on;
-% ri = randperm(size(point,1));
-% if length(ri) > 2000
-%     ri = ri(1:2000);
-% end
-% for j = 1:length(ri)
-%     i = ri(j);
-%     if norm(point(i,:)) < Inf & norm(point(i,:)) > norm(size(f)) / 2
-%         plot(point(i,1)+size(f,2)/2,point(i,2)+size(f,1)/2,'x','color','b');
-%     end
-% end
+ri = randperm(size(point,1));
+if length(ri) > 2000
+    ri = ri(1:2000);
+end
+for j = 1:length(ri)
+    i = ri(j);
+    if norm(point(i,:)) < Inf & norm(point(i,:)) > norm(size(f)) / 2
+        plot(point(i,1)+size(f,2)/2,point(i,2)+size(f,1)/2,'x','color','b');
+    end
+end
 
 lt = min(vanishing(:,1)) + size(f,2)/2 - 300;
 rt = max(vanishing(:,1)) + size(f,2)/2 + 300;

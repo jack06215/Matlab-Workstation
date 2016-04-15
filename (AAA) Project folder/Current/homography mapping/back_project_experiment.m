@@ -1,10 +1,9 @@
 %% Program Initialisation
 addpath(genpath('.'));
-% ccc;
 close all; clc;
 %% Waiting for user input
-im = imread('Garfield_Building_Detroit.JPG');
-im_obj = imread('11270691_828.jpg');
+im = imread('z8vicenaimjrjn7wvdsh.jpg');
+im_obj = imread('LLTV2_illustration_logo.jpg');
 im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
                 1,1,size(im_obj,1),size(im_obj,1)];
 %% Pre-defined parameters from previous program
@@ -12,8 +11,10 @@ im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
 center = [size(im,2)/2; size(im,1)/2];
 %% Construct homography matrix
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
-X = [0.150029936810503,0.143176210731948;-0.595200087397920,0.381606944802646;0.131683946642265,-0.090483451186387];
-H_form = computeFrontalH(X(:,2), center, K, im);
+% K = [791,0,0;0,791,0;0,0,1];
+% X = [0.150029936810503,0.143176210731948;-0.595200087397920,0.381606944802646;0.131683946642265,-0.090483451186387];
+X = [0.946461255663448,-0.548922823284659;-0.023890003326811,-5.852889297814638e-04;0.007198255854039,0.008453552961197];
+H_form = computeFrontalH(X(:,1), center, K, im);
 H = H_form.T;
 %% Warping
 im_warp = imwarp(im, H_form);
@@ -31,14 +32,24 @@ AA = H' * A;
 AA = AA ./ [AA(3,:); AA(3,:); AA(3,:)];
 AA = int32(AA); % Truncate from float to int
 %% Get 4 points from user
-figure, imshow(im_warp);
-hold on;
-[ptXp, ptYp] = getpts;    % Get points from user select
+while (1)
+    figure, imshow(im_warp);
+    hold on;
+    line = imrect;
+    my_roi = wait(line);
+    position = [my_roi(1),my_roi(1)+my_roi(3),my_roi(1)+my_roi(3),my_roi(1);
+                my_roi(2),my_roi(2),my_roi(2)+my_roi(4),my_roi(2)+my_roi(4)];
+    hold off;
+    close;
+    if (size(position,2)==4)
+        break;
+    end
+end
+ptXp = position(1,:);
+ptYp = position(2,:);
 lsX = floor(ptXp);lsY = floor(ptYp);
 lsX = lsX + double(repmat(min(AA(1,:)) - 1,size(lsX,1),1)); 
 lsY = lsY + double(repmat(min(AA(2,:)) - 1,size(lsY,1),1));
-hold off;
-close;
 %% Apply inverse homography to the 4 points
 ls1p = [lsX(1); lsY(1); lsX(2); lsY(2)];
 ls2p = [lsX(3); lsY(3); lsX(4); lsY(4)];
@@ -56,9 +67,6 @@ im_rect = [ls1p_back(1),ls1p_back(3),ls2p_back(1),ls2p_back(3);
 T = fitgeotrans(im_obj_rect',im_rect','projective');
 im_obj_warp = imwarp(im_obj, T);
 T_H = T.T;
-
-
-
 
 %% Experiment
 % Look-up table for image object(Augmented object)...........<<<<<<<
@@ -85,20 +93,7 @@ index_img(3) = im_obj_rect(5) + (im_obj_rect(6) - 1) * sz(2);
 index_img(4) = im_obj_rect(7) + (im_obj_rect(8) - 1) * sz(2);
 im_warp_corner = [ptXYp(:,index_img(1)),ptXYp(:,index_img(2)),ptXYp(:,index_img(3)),ptXYp(:,index_img(4))];
 
-% figure, imshow(im_obj_warp);
-% hold on;
-% plot(im_warp_corner(1), im_warp_corner(2), 'x', 'Color', 'red', 'LineWidth', 3);
-% plot(im_warp_corner(3), im_warp_corner(4), 'x', 'Color', 'cyan', 'LineWidth', 3);
-% plot(im_warp_corner(5), im_warp_corner(6), 'x', 'Color', 'yellow', 'LineWidth', 3);
-% plot(im_warp_corner(7), im_warp_corner(8), 'x', 'Color', 'magenta', 'LineWidth', 3);
-% hold off;
 %% Point coordinates to pixel indices conversion (experiment...)
-% Old code
-% x_vertices = [ls1p_back(1),ls1p_back(3),ls2p_back(1),ls2p_back(3),ls1p_back(1)];
-% y_vertices = [ls1p_back(2),ls1p_back(4),ls2p_back(2),ls2p_back(4),ls1p_back(2)];
-% mask = poly2mask(x_vertices,y_vertices,size(im,1),size(im,2));
-% pixel_index = find(mask==1);
-
 %Object 
 im_warp_corner = double(im_warp_corner);
 x_vertices = [im_warp_corner(1),im_warp_corner(3),im_warp_corner(5),im_warp_corner(7),im_warp_corner(1)];
@@ -123,7 +118,7 @@ img_enplace(pixel_index + (2*img_stride)) = im_obj_warp(2*img_content_stride + o
 figure, subplot(2,1,1);
 imshow(im_warp);
 hold on;
-title('4 points selected by the user in frontal-parallel view');
+title('rectangle selected by the user in frontal-parallel view');
 plot(ptXp(1), ptYp(1), 'x', 'Color', 'red', 'LineWidth', 3);
 plot(ptXp(2), ptYp(2), 'x', 'Color', 'cyan', 'LineWidth', 3);
 plot(ptXp(3), ptYp(3), 'x', 'Color', 'yellow', 'LineWidth', 3);
@@ -133,7 +128,7 @@ hold off;
 subplot(2,1,2);
 imshow(im);
 hold on;
-title('4 points back-project to its original view');
+title('rectangle back-project to original view');
 plot(ls1p_back(1), ls1p_back(2), 'x', 'Color', 'red', 'LineWidth', 3);
 plot(ls1p_back(3), ls1p_back(4), 'x', 'Color', 'cyan', 'LineWidth', 3);
 plot(ls2p_back(1), ls2p_back(2), 'x', 'Color', 'yellow', 'LineWidth', 3);
@@ -142,5 +137,3 @@ hold off;
 % enplace the image object onto the bounding area in original view
 figure, imshow(img_enplace);
 title('Augmented result in the original view');
-
-
