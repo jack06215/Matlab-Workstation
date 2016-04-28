@@ -2,8 +2,6 @@ function [] = showTOVP( g, f, vanishing, point, foc )
 figure,
 imshow(g)
 hold on;
-
-% %% Show all intersction points
 % ri = randperm(size(point,1));
 % if length(ri) > 2000
 %     ri = ri(1:2000);
