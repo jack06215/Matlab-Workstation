@@ -1,4 +1,4 @@
-refImg = imread('outImg.png');
+refImg = imread('Garfield_Building_Detroit.jpg');
 num_vertStrip = 2;
 num_horzStrip = 1;
 num_chn = 3;
