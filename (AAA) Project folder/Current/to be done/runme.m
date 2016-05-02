@@ -9,7 +9,7 @@ color = {'Red', 'Cyan', 'Yellow'};
 ls = ls(:,1:4)';
 ls = [ls(1,:); ls(3,:); ls(2,:); ls(4,:)];
 %% Delete vertical line segment
-[ar,~] = find(ls_label==1);
+[ar,~] = find(ls_label==2);
 ls_label(ar) = [];
 ls(:,ar) = [];
 %% Midpoint of line segment
@@ -31,14 +31,13 @@ for i=1:size(intpt,2)
 end
 intpt = intpt(1:2,:);
 %% Show result
-figure;
+figure, imshow(img)
 hold on;
-xmin = -2000;
-xmax = 2000;
-ymin = -2000;
-ymax = 2000;
-axis([xmin, xmax, ymin, ymax]);
-index = 200;
+% xmin = -2000;
+% xmax = 2000;
+% ymin = -2000;
+% ymax = 2000;
+% axis([xmin, xmax, ymin, ymax]);
 
 for i=1:size(ls,2)
     plot(ls([1,3],i), ls([2,4],i), 'Color', color{ls_label(i)}, 'LineWidth', 1);
