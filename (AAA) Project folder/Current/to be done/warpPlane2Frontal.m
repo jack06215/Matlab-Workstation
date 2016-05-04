@@ -1,5 +1,6 @@
 %% Construct homography matrix
 ax=x(1);ay=x(2);
+center = [size(img,2)/2; size(img,1)/2];
 R1=makehgtform('xrotate',ax,'yrotate',ay); 
 R1=R1(1:3,1:3);
 C_center = [1,0, -center(1);
@@ -15,6 +16,7 @@ Rect_out = Rect_out./repmat(scale_fac,3,4);
 %% Shift the Rect_out back to "pixel coordinate" w.r.t. Rect
 Rect_out(1,2) = Rect_out(1,2) - Rect_out(1,1);
 Rect_out(2,2) = Rect_out(2,2) - Rect_out(2,1);
+
 Rect_out(1,3) = Rect_out(1,3) - Rect_out(1,1);
 Rect_out(2,3) = Rect_out(2,3) - Rect_out(2,1);
 Rect_out(1,4) = Rect_out(1,4) - Rect_out(1,1);

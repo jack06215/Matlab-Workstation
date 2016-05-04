@@ -1,4 +1,4 @@
-close all;
+close all;clear;
 addpath(genpath('.'));
 img = imread('Garfield_Building_Detroit.jpg');
 img_gray = rgb2gray(img);
@@ -9,9 +9,11 @@ color = {'Red', 'Cyan', 'Yellow'};
 ls = ls(:,1:4)';
 ls = [ls(1,:); ls(3,:); ls(2,:); ls(4,:)];
 %% Delete vertical line segment
-[ar,~] = find(ls_label==2);
+[ar,~] = find(ls_label==2 | ls_label==3);
 ls_label(ar) = [];
 ls(:,ar) = [];
+% ls(:,20) = [];
+% ls_label(20) = [];
 %% Midpoint of line segment
 ls_midpt = zeros(2,size(ls,2));
 for i=1:size(ls,2)
@@ -38,9 +40,12 @@ hold on;
 % ymin = -2000;
 % ymax = 2000;
 % axis([xmin, xmax, ymin, ymax]);
-
+% i = 61;
+% plot(ls([1,3],i), ls([2,4],i), 'Color', 'red', 'LineWidth', 1);
 for i=1:size(ls,2)
     plot(ls([1,3],i), ls([2,4],i), 'Color', color{ls_label(i)}, 'LineWidth', 1);
+%     pause(1);
+%     disp(num2str(i));
 end
 % plot(intpt(1,:),intpt(2,:), 'x', 'Color', 'Black', 'LineWidth', 1);
-plot(ls_midpt(1,:),ls_midpt(2,:), 'x', 'Color', 'Black', 'LineWidth', 1);
+% plot(ls_midpt(1,:),ls_midpt(2,:), 'x', 'Color', 'Black', 'LineWidth', 1);
