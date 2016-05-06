@@ -1,4 +1,4 @@
-function [im_new] = getPerspectiveImg(img,x,K,center)
+function [im_new,T] = getPerspectiveImg(img,x,K,center)
 ax=x(1);ay=x(2);
 if nargin < 4
     center = [size(img,2)/2; size(img,1)/2];

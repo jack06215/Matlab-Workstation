@@ -1,6 +1,6 @@
 function [img_ls,img_ls_center,img_ls_label] = vp_lineCluster(img_gray,center)
 %% Vanishing Point Detection
-[img_ls, img_vp] = detectTOVP(img_gray);
+[img_ls, img_vp] = detectTOVP(img_gray,20);
 % Re-arrange the VP order {TOP,RHS,LSH}
 % 1st elememt for TOP
 [~, swapIdx] = min(img_vp(:,2));
