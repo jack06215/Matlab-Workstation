@@ -1,6 +1,6 @@
 close all;clear;
 addpath(genpath('.'));
-img = imread('Garfield_Building_Detroit.jpg');
+img = imread('Looking_Up_at_Empire_State_Building.jpg');
 img_gray = rgb2gray(img);
 color = {'Red', 'Cyan', 'Yellow'};
 %% Perform line segment detection and clustering based on Vanishing point
