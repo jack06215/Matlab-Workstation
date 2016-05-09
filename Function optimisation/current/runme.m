@@ -162,7 +162,7 @@ end
 % 
 
 
-% Show result
+%% Show result
 figure;
 imshow(img), hold on;
 for i=1:size(imgStripWall,2)
