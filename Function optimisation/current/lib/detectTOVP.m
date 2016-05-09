@@ -1,8 +1,5 @@
-function [line, vanishing, point, foc] = detectTOVP(f,ls_threshold)
-if nargin < 1 
-    ls_threshold = 40;
-end
-line = getLines(f,ls_threshold);
+function [line, vanishing, point, foc] = detectTOVP(f)
+line = getLines(f,40);
 point = zeros((size(line,1) - 1)*size(line,1)/2,2);
 count = 0;
 for i = 1:size(line,1)

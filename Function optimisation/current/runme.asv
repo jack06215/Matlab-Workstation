@@ -70,6 +70,7 @@ for i=1:size(img_lsMidPts,1)
     img_lsMidPts(i,2) = (ls_filtered(2,i)+ls_filtered(4,i)) / 2;
 end
 
+
 ls_categorised = cell(1,num_of_strips);
 for i=1:num_of_strips
 %     x_tmp(:,i) = [imgStripWall(1,i),imgStripWall(1,i+1),imgStripWall(3,i+1),imgStripWall(3,i),imgStripWall(1,i)];
@@ -83,7 +84,7 @@ for i=1:num_of_strips
     ls_tmp = ls_filtered(:,ind);
     ls_categorised{i}=ls_tmp;
 end
-% Line segment in its perspective view
+
 ls_categorised_p = cell(1,num_of_strips);
 for i=1:num_of_strips
     ls_tmp = ls_categorised{i};
@@ -169,8 +170,9 @@ for i=1:size(imgStripWall,2)
     plot(imgStripWall([1,3],i), imgStripWall([2,4],i), 'Color', 'red', 'LineWidth', 1);
 
 end
-color = hsv(num_of_strips);
+
 for j=1:size(ls_categorised,2)
+    color = hsv(num_of_strips);
     ls_tmp = ls_categorised{j};
     for i=1:size(ls_tmp,2)
        plot(ls_tmp([1,3],i), ls_tmp([2,4],i), 'Color', color(j,:), 'LineWidth', 2);
@@ -186,7 +188,7 @@ end
 for i=1:num_of_strips
     ls_tmp = ls_categorised_p{i};
     for j=1:size(ls_tmp,2)
-        plot(ls_tmp([1,3],j), ls_tmp([2,4],j), 'Color', color(i,:), 'LineWidth', 2);
+        plot(strips_proj([1,3],i), strips_proj([2,4],i), 'Color', 'red', 'LineWidth', 1);
     end
 end
 hold off
