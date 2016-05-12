@@ -1,6 +1,6 @@
 addpath(genpath('.'));
 ccc;
-img = imread('data/Garfield_Building_Detroit.jpg');
+img = imread('data/tjsadfgjio.jpg');
 img_gray = rgb2gray(img);
 center = [size(img,2)/2; size(img,1)/2];
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
