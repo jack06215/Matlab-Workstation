@@ -21,7 +21,7 @@ x = tiltRectification(ls_center_filtered,K);
 H = T.T;
 % figure,imshow(imgp);
 
-%% Build image strips
+%% Build image strips wall
 % Remove all vertical line segments
 [ar,~] = find(ls_label == 1);
 ls_filtered = ls;
@@ -44,7 +44,7 @@ end
 imgStripWall(4,:) = size(img,1);
 imgStripWall(:,end) = [size(img,2);1;size(img,2);size(img,1)];
 
-% Build image pixel location relation via H
+% Build image will w.r.t. H
 sz = size(img);
 [rows,cols]= meshgrid(1:sz(1), 1:sz(2));
 B = [reshape(cols,1,[]);
@@ -71,6 +71,7 @@ for i=1:size(img_lsMidPts,1)
 end
 
 ls_categorised = cell(1,num_of_strips);
+ls_categorised_p = cell(1,num_of_strips);
 for i=1:num_of_strips
 %     x_tmp(:,i) = [imgStripWall(1,i),imgStripWall(1,i+1),imgStripWall(3,i+1),imgStripWall(3,i),imgStripWall(1,i)];
 %     y_tmp(:,i) = [imgStripWall(2,i),imgStripWall(2,i+1),imgStripWall(4,i+1),imgStripWall(4,i),imgStripWall(2,i)];
@@ -82,10 +83,7 @@ for i=1:num_of_strips
     ind = find(in==1);
     ls_tmp = ls_filtered(:,ind);
     ls_categorised{i}=ls_tmp;
-end
-% Line segment in its perspective view
-ls_categorised_p = cell(1,num_of_strips);
-for i=1:num_of_strips
+    % Line segment in its perspective view
     ls_tmp = ls_categorised{i};
     ls1_proj = zeros(size(ls_tmp));
     for j=1:size(ls_tmp,2)
@@ -95,6 +93,19 @@ for i=1:num_of_strips
     end
     ls_categorised_p{i} = ls1_proj;
 end
+%% Experiment code
+% Build Adjacency matrix
+A = ones(8);
+A(logical(eye(size(A)))) = 0;
+A = triu(A);
+
+
+
+
+
+
+
+
 % for i=1:num_of_strips
 %     xv = x_tmp(:,i);
 %     yv = y_tmp(:,i);
