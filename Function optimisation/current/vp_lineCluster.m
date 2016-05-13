@@ -1,11 +1,23 @@
-function [img_ls,img_ls_center,img_ls_label] = vp_lineCluster(img_gray,center,ls_threshold)
+%VP_LINECLUSTER - Line Segment Clustering based on 3 Vanishing Point
+% Given an input image, it will perform line detection and furthermore
+% categorised them according to the closest three orthogonal vanishing 
+% points (TOVP).
+%--------------------------------------------------------------------------
+%   INPUT
+%       img_gray  - Grayscale image.
+%       ls_center - 4xn of centered line segment defined by two end
+%                   points.
+%       K         - 3x3 of camera intrnsic without image center infromation.
+%   OUTPUT
+%       x         - 1x2 of final result of estimate angle alpha and beta.
+%--------------------------------------------------------------------------
+
+function [img_ls,img_ls_center,img_ls_label,img_vp] = vp_lineCluster(img_gray,center,ls_threshold)
 %% Vanishing Point Detection
 [~, img_vp] = detectTOVP(img_gray);
-if nargin < 2 
+if nargin < 3 
     ls_threshold = 40;
-elseif ls_threshold < 25
-    warning('ls_threshold is too less, value is set to 25');
-    ls_threshold = 25;
+    warning('ls_threshold is set to default value of 40');
 end
 % Re-arrange the VP order {TOP,RHS,LSH}
 % 1st elememt for TOP
