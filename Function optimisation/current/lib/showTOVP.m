@@ -34,5 +34,5 @@ fprintf('%f\t%f\n',vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2);
 fprintf('%f\t%f\n',vanishing(2,1) +size(f,2)/2,vanishing(2,2) +size(f,1)/2);
 fprintf('%f\t%f\n',vanishing(3,1) +size(f,2)/2,vanishing(3,2) +size(f,1)/2);
 % fprintf('Estimated Focal Length: %d\n',foc);
+hold off;
 end
-

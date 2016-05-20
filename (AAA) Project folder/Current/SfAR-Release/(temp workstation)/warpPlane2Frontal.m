@@ -1,5 +1,5 @@
 %% Construct homography matrix
-ax=X3(4);ay=X3(5);az=X3(6);
+ax=X3(7);ay=X3(8);az=X3(9);
 R1=makehgtform('xrotate',ax,'yrotate',ay, 'zrotate',az); 
 R1=R1(1:3,1:3);
 C_center = [1,0, -center(1);
