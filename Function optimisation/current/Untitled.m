@@ -2,7 +2,7 @@ addpath(genpath('.'));
 ccc;
 % Parameters
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
-img = imread('data/object0069.view05.png');
+img = imread('data/Garfield_Building_Detroit.jpg');
 center = [size(img,2)/2; size(img,1)/2];
 C_center = [1,0, -center(1);
             0,1, -center(2);

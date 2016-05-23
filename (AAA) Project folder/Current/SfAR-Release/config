@@ -10,6 +10,6 @@ dthreshgap 1
 athreshadj 10
 numPairs 4
 highthresh 0.01
-maxTrials 200
-maxDataTrials 500
+maxTrials 100
+maxDataTrials 100
 poptype 1
