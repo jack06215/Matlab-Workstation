@@ -1,6 +1,6 @@
 addpath(genpath('.'));
 ccc;
-img = imread('data/018.jpg');
+img = imread('data/Garfield_Building_Detroit.jpg');
 img_gray = rgb2gray(img);
 % figure,hold on
 % imshow(img);
@@ -42,11 +42,12 @@ ls_label(ar)=[];
 ls_filtered = [ls_filtered; ls_label'];
 
 % Testing code (line segment filtering)
-color = hsv(3);
+color = hsv(size(ls,2));
+color_hex = rgb2hex(color);
 figure, imshow(img);
 hold on;
-for i=1:size(ls_filtered,2)
-   plot(ls_filtered([1,3],i), ls_filtered([2,4],i), 'Color', color(ls_label(i),:), 'LineWidth', 2);
+for i=1:size(ls,2)
+   plot(ls([1,3],i), ls([2,4],i), 'Color', color(i,:), 'LineWidth', 2);
 end
 
 % Build image wall equally vertical strips
@@ -180,7 +181,7 @@ end
 
 for i=1:size(imgPlane_candidate,2)
     tmp2 = imgPlane_candidate{i};
-    figure, imshow(img);
+    figure(2), imshow(img);
     hold on;
     for j=1:size(tmp2,2)
         plot(tmp2([1,3],j), tmp2([2,4],j), 'Color', 'red', 'LineWidth', 1);
@@ -275,6 +276,34 @@ for i=1:size(imgPlane_candidate_score,1)
     area_pa = imgStrip_area_pa{i};
     imgPlane_candidate_score(i) = dot(plane_score,area_pa);
 end
+
+
+% Find boundary
+addpath(genpath('.'));
+A = imgPlane_label{end};
+counter = 0;
+list = 0;
+for i=1:size(A,1) - 1
+    if A(i) ~= A(i+1)
+        counter = counter + 1;
+        if (counter > length(list))
+            list(end+1, end+length(list)) = 0;
+        end
+        list(counter) = i+1;
+    end
+end
+list = list(1:counter); % Trim excess capacity
+list = [1,list];
+delta = diff(list);
+[~,delta_ind] = sort(delta,'descend');
+ind = list(delta_ind(1)+1);
+
+imgPlane_boundary = imgStripWall(:,ind);
+figure, imshow(img);
+hold on;
+plot(imgPlane_boundary([1,3]), imgPlane_boundary([2,4]), 'Color', 'red', 'LineWidth', 3);
+hold off;
+
 
 % for i=1:num_of_strips
 %     xv = x_tmp(:,i);
