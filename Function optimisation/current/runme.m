@@ -305,6 +305,7 @@ plot(imgPlane_boundary([1,3]), imgPlane_boundary([2,4]), 'Color', 'red', 'LineWi
 hold off;
 
 
+
 % for i=1:num_of_strips
 %     xv = x_tmp(:,i);
 %     yv = y_tmp(:,i);

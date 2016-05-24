@@ -1,18 +1,30 @@
-addpath('C:\tools\mexopencv');
-addpath(genpath('.'));
 close all;
-image = cv.imread('./data/lucky_star_hiragana_wall_chart_by_muddy_mudkip.jpg');
-gray = cv.cvtColor(image,'BGR2GRAY');
-sobel = cv.Sobel(gray,'XOrder',1,'YOrder',0);
+clear;
 
+line1=[0,10,5,10]';
+line2=[10,0,10,5]';
+line3=[0,0,5,5]';
+line = [line1,line2,line3];
 
-img_th = cv.threshold(sobel,'Otsu','MaxValue',255,'Type','Binary');
-kernel = cv.getStructuringElement('Shape','Rect','KSize',[17,3]);
-% dilated  = cv.dilate(img_th,'Element',kernel,'Iterations',13);
-morph = cv.morphologyEx(img_th,'Close','Element',kernel);
-[contours, hierarchy] = cv.findContours(img_th, ...
-    'Mode','External', 'Method','Simple');
+L = twopts2L(line);
 
-find(cellfun('length',contours)>100);
-figure, imshow(image);
-figure, imshow(morph);
+% A=[-(line1(2,2)-line1(1,2)),(line1(2,1)-line1(1,1));
+% -(line2(2,2)-line2(1,2)),(line2(2,1)-line2(1,1));
+% -(line3(2,2)-line3(1,2)),(line3(2,1)-line3(1,1))];
+% 
+% 
+% b=[(line1(1,1)*A(1,1))+ (line1(1,2)*A(1,2));
+%    (line2(1,1)*A(2,1))+ (line2(1,2)*A(2,2));
+%    (line3(1,1)*A(3,1))+ (line3(1,2)*A(3,2))];
+% 
+% [U D V] = svd(A)
+% bprime = U'*b
+% 
+% y=[bprime(1)/D(1,1);bprime(2)/D(2,2)]
+% 
+% x=V*y
+% 
+% figure, hold on;
+% plot(line1(1,:),line1(2,:),'color',[1,0,0],'LineWidth',2);
+% plot(line2(1,:),line2(2,:),'color',[1,0,0],'LineWidth',2);
+% plot(x(:),y(:),'x','color',[0,1,0],'LineWidth',3);
