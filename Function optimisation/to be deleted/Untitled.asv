@@ -11,8 +11,8 @@ leftmosst_wall = [1;1;1;size(img,1)];
 rightmost_wall = [size(img,2);1;size(img,2);size(img,1)];
         
         
-% list_A = [174,167,54,84];
-list_A = [104,113,207,41];
+%list_A = [174,54,167,84];
+list_A = [104,113,41,207];
 quad_a = ls(:,list_A(:));
 
 % Sort out line segments
@@ -46,10 +46,10 @@ figure
 imshow(img),hold on;
 
 
-% quad = [quad(:,2),quad(:,1),quad(:,4),quad(:,3)];
+quad = [quad(:,2),quad(:,1),quad(:,4),quad(:,3)];
 for i=1:size(list_A,2)
-   plot(quad_a([1,3],i), quad_a([2,4],i), 'Color', 'red', 'LineWidth', 2);
-   plot(quad(1,i),quad(2,i),'x','Color','blue','LineWidth',2);
+   plot(quad_a([1,3],list_A(i)), ls([2,4],list_A(i)), 'Color', 'red', 'LineWidth', 2);
+   plot(quad(1,1),quad(2,1),'x','Color','black','LineWidth',2);
 end
 quad = [quad;1,1,1,1];
 % [x,y] = getpts;
@@ -71,6 +71,7 @@ hold off;
 
 
 H = homography2d(quad,leftPlane);
+
 H_K = K\H;
 s = norm(H_K(:,2)) / norm(H_K(:,1));
 

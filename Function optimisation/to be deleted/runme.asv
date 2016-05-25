@@ -44,37 +44,15 @@ ls_filtered = [ls_filtered; ls_label'];
 %---------------------------------------- Testing code (line segment filtering)
 color = hsv(size(ls,2));
 color_hex = rgb2hex(color);
-% figure, imshow(img);
-% hold on;
-% list_A = [174,54,167,84];
-% quad_a = ls(:,list_A(:));
-% 
-% % Sort out line segments
-% L = twopts2L(quad_a);
-% ref = repmat(-eps,(size(L(1:2,:))));
-% diff = abs(L(1:2,:)) - ref;
-% [~,ind_a] = min(diff,[],1);
-% [~,ind_a] = sort(ind_a);
-% L_sort = L(:,ind_a);
-% 
-% combinations = [1,3;...
-%                 1,4;...
-%                 2,3;...
-%                 2,4;];
-% 
-% quad = zeros(2,4);            
-% for i=1:size(combinations,1)
-%     lv1 = L_sort(:,combinations(i,1));
-%     lv2 = L_sort(:,combinations(i,2));
-%     tmp = az_hcross(lv1,lv2);
-%     quad(:,i) = tmp(1:2);
-% end
-% 
-% 
-% for i=1:size(list_A,2)
-%    plot(ls([1,3],list_A(i)), ls([2,4],list_A(i)), 'Color', 'red', 'LineWidth', 2);
-%    plot(quad(1,i),quad(2,i),'x','Color','black','LineWidth',2);
-% end
+figure, imshow(img);
+hold on;
+list_ = [174,54,167,84];
+quad = ls(:,list(:));
+
+
+for i=1:size(list,2)
+   plot(ls([1,3],list(i)), ls([2,4],list(i)), 'Color', 'red', 'LineWidth', 2);
+end
 
 % Build image wall equally vertical strips
 num_of_div = 6;
