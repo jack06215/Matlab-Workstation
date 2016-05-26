@@ -1,8 +1,7 @@
 %% Program Initialisation
 addpath(genpath('.'));
-close all; clc;
+close all;
 %% Waiting for user input
-im = imread('z8vicenaimjrjn7wvdsh.jpg');
 im_obj = imread('LLTV2_illustration_logo.jpg');
 im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
                 1,1,size(im_obj,1),size(im_obj,1)];
@@ -13,8 +12,8 @@ center = [size(im,2)/2; size(im,1)/2];
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
 % K = [791,0,0;0,791,0;0,0,1];
 % X = [0.150029936810503,0.143176210731948;-0.595200087397920,0.381606944802646;0.131683946642265,-0.090483451186387];
-X = [0.946461255663448,-0.548922823284659;-0.023890003326811,-5.852889297814638e-04;0.007198255854039,0.008453552961197];
-H_form = computeFrontalH(X(:,1), center, K, im);
+% X = [0.946461255663448,-0.548922823284659;-0.023890003326811,-5.852889297814638e-04;0.007198255854039,0.008453552961197];
+H_form = computeFrontalH(X3(:,1), center, K, im);
 H = H_form.T;
 %% Warping
 im_warp = imwarp(im, H_form);

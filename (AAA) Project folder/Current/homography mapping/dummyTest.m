@@ -1,8 +1,6 @@
 %% Program Initialisation
 addpath(genpath('.'));
-ccc;
 %% Waiting for user input
-im = imread('DSC_0760.JPG');
 figure;
 imshow(im);
 hold on;
