@@ -3,9 +3,9 @@ close all;
 % Parameters
 K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
 % img = imread('data/Garfield_Building_Detroit.jpg');
+im_obj = imread('data/lucky_star_hiragana_wall_chart_by_muddy_mudkip.jpg');
 im_obj_rect = [1,size(im_obj,2),size(im_obj,2),1;
                 1,1,size(im_obj,1),size(im_obj,1)];
-im_obj = imread('data/lucky_star_hiragana_wall_chart_by_muddy_mudkip.jpg');
 center = [size(img,2)/2; size(img,1)/2];
 C_center = [1,0, -center(1);
             0,1, -center(2);
