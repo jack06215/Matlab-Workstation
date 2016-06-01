@@ -14,7 +14,7 @@ leftmosst_wall = [1;1;1;size(img,1)];
 rightmost_wall = [size(img,2);1;size(img,2);size(img,1)];
         
         
-% list_A = [174,167,54,84];
+%list_A = [174,167,54,84];
 list_A = [104,113,207,41];
 quad_a = ls(:,list_A(:));
 
@@ -70,16 +70,18 @@ hold off;
 % plot(rect(1,:),rect(2,:),'x','color','red','linewidth',3);
 % 
 % project_rect = [0,h,0,h;0,0,h,h;1,1,1,1];
-
-
-
-H = homography2d(quad,leftPlane);
+Rect_t = [0,size(img,2),0,size(img,2);0,0,size(img,2),size(img,2);1,1,1,1];
+% Rect_t = [Rect_t(:,1),Rect_t(:,3),Rect_t(:,4),Rect_t(:,2)];
+% H = homography2d(quad,rightPlane);
+% H = homography2d(quad,leftPlane);
+H = homography2d(quad,Rect_t);
 H_K = K\H;
 s = norm(H_K(:,2)) / norm(H_K(:,1));
 
-A = [1,1/s,1];
-AA = diag(A);
-H1 = H * AA;
+
+A_s = [1,1/s,1];
+AA_s = diag(A_s);
+H1 = H * AA_s;
 %% Calclating Resultant Translation and Scale
 Rect = [0,0,1; size(img,2),0,1; size(img,2),size(img,1),1; 0,size(img,1),1]';
 Rect_out = homoTrans(H1, Rect);

@@ -1,5 +1,6 @@
 %% Construct homography matrix
-ax=XX(1);ay=XX(2);az=XX(3);
+ax=X3(4);ay=X3(5);az=X3(6);
+% ax=X(1);ay=X(2);az=0.6;
 flag1 = ax >= 1 || ax <= -1;
 flag2 = ay >= 1 || ay <= -1;
 % flag3 = az >
@@ -9,6 +10,15 @@ C_center = [1,0, -center(1);
             0,1, -center(2);
             0,0,1];
 H1= K*(R1/K)*C_center;
+s = norm(H1(:,2)) / norm(H1(:,1));
+%%
+% s = norm(H1(:,2)) / norm(H1(:,1));
+% A_s = [1,1/s,1];
+% AA_s = diag(A_s);
+% H1 = H1 * AA_s;
+
+%
+
 
 %% Calclating Resultant Translation and Scale
 Rect = [0,0,1; size(im,2),0,1; size(im,2),size(im,1),1; 0,size(im,1),1]';

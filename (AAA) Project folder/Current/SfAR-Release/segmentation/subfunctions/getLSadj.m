@@ -8,10 +8,17 @@ if size(im,3)>1
 else
     imgray=im;
 end
-
+% Method 1
 % LSD and take the first 4 rows containing 2 end points
-L = lsd(double(imgray'),LSDscale);
-L=L(1:4,:);
+% L = lsd(double(imgray'),LSDscale);
+% L=L(1:4,:);
+
+
+% Method 2
+L = getLines(imgray,30);
+L = L(:,1:4)';
+L = [L(1,:); L(3,:); L(2,:); L(4,:)];
+
 
 % DEBUG OUTPUT - Gap filling
 if talk

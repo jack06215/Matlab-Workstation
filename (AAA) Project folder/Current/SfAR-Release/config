@@ -9,7 +9,7 @@ athreshgap 2
 dthreshgap 1
 athreshadj 10
 numPairs 4
-highthresh 0.01
+highthresh 0.0025
 maxTrials 100
 maxDataTrials 100
 poptype 1
