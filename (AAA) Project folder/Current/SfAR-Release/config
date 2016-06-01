@@ -1,4 +1,4 @@
-talk 0
+talk 1
 saveFig 0
 scaleimageflag 1
 gapfillflag 1
@@ -8,7 +8,7 @@ LSDscale 0.8
 athreshgap 2
 dthreshgap 1
 athreshadj 10
-numPairs 2
+numPairs 4
 highthresh 0.01
 maxTrials 200
 maxDataTrials 500

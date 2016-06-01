@@ -2,6 +2,8 @@ function [] = showTOVP( g, f, vanishing, point, foc )
 figure,
 imshow(g)
 hold on;
+
+% %% Show all intersction points
 % ri = randperm(size(point,1));
 % if length(ri) > 2000
 %     ri = ri(1:2000);
@@ -23,9 +25,9 @@ plot([0 vanishing(2,1)] +size(f,2)/2,[0 vanishing(2,2)] + size(f,1)/2,'.-','mark
 plot([0 vanishing(3,1)] +size(f,2)/2,[0 vanishing(3,2)] + size(f,1)/2,'.-','markersize',10,'linewidth',2,'color','k');
 
 
-plot(vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
-plot(vanishing(2,1) +size(f,2)/2,vanishing(2,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
-plot(vanishing(3,1) +size(f,2)/2,vanishing(3,2) +size(f,1)/2,'s','color','k','markersize',15,'linewidth',2);
+plot(vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2,'*','color','k','markersize',15,'linewidth',3);
+plot(vanishing(2,1) +size(f,2)/2,vanishing(2,2) +size(f,1)/2,'*','color','k','markersize',15,'linewidth',3);
+plot(vanishing(3,1) +size(f,2)/2,vanishing(3,2) +size(f,1)/2,'*','color','k','markersize',15,'linewidth',3);
 
 fprintf('Coordinates of Detected Vanishing Points:\n');
 fprintf('%f\t%f\n',vanishing(1,1) +size(f,2)/2,vanishing(1,2) +size(f,1)/2);

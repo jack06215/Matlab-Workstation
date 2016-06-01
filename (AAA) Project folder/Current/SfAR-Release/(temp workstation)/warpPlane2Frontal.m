@@ -5,14 +5,19 @@ ax=X3(4);ay=X3(5);az=X3(6);
 % Make the rotation matrix
 =======
 %% Construct homography matrix
+<<<<<<< HEAD
 ax=X3(4);ay=X3(5);az=X3(6);
 >>>>>>> current
+=======
+ax=X3(7);ay=X3(8);az=X3(9);
+>>>>>>> 72df5bce74e1c4450dfb1f79646472ef02055567
 R1=makehgtform('xrotate',ax,'yrotate',ay, 'zrotate',az); 
 R1=R1(1:3,1:3);
 C_center = [1,0, -center(1);
             0,1, -center(2);
             0,0,1];
 H1= K*(R1/K)*C_center;
+
 %% Calclating Resultant Translation and Scale
 Rect = [0,0,1; size(im,2),0,1; size(im,2),size(im,1),1; 0,size(im,1),1]';
 Rect_out = homoTrans(H1, Rect);
