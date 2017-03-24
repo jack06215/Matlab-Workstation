@@ -1,5 +1,5 @@
 %% Construct homography matrix
-ax=X3(4);ay=X3(5);az=X3(6);
+ax=X3(1);ay=X3(2);az=X3(3);
 % ax=X(1);ay=X(2);az=0.6;
 flag1 = ax >= 1 || ax <= -1;
 flag2 = ay >= 1 || ay <= -1;

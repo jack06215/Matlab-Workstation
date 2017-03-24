@@ -1,4 +1,4 @@
-function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp,x3] = computeSegmentation(impath,talk)
+function [im,K,center,LS,LS_c,X,Ladj,hFig,L,inliers,numhyp,x3, LL] = computeSegmentation(impath,talk)
 
 %% This function computes segmentation for the given image.
 %
@@ -44,7 +44,7 @@ K = [4.771474878444084e+02,0,0;0,4.771474878444084e+02,0;0,0,1];
 % K = [1,0,0;0,1,0;0,0,1];
 center = [size(im,2)/2;size(im,1)/2]; % Landscape
 % center = [size(im,1)/2;size(im,2)/2];   % Protrait
-[LS,Ladj,LS_c,L,hFig] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);
+[LS,Ladj,LS_c,L,hFig, LL] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);
 
 %% Form plane orientation hypotheses
 disp('into plane orientation');

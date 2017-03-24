@@ -1,4 +1,4 @@
-function [LS,Ladj,LS_c,L,hFig] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk)
+function [LS,Ladj,LS_c,L,hFig, LL] = lineDetection(im,center,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk)
 %LINEDETECTION 
 % inputs
 % im: image
@@ -15,7 +15,7 @@ function [LS,Ladj,LS_c,L,hFig] = lineDetection(im,center,LSDscale,gapfillflag,ex
 
 %%
 % Detect and preprocess the lines
-[LS,~,Ladj,hFig]=getLSadj(im,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);  % LS denotes a segment defined by two points
+[LS,~,Ladj,hFig, LL]=getLSadj(im,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk);  % LS denotes a segment defined by two points
                                                         % x suffix is for extended line segments
 % Ladj=triu(Ladj);    % since Ladj is symmetric, only triu matters
 

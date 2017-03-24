@@ -1,4 +1,4 @@
-function [L1,L2,adj,hFig]=getLSadj(im,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk)
+function [L1,L2,adj,hFig, L]=getLSadj(im,LSDscale,gapfillflag,extendflag,maxlines,athreshgap,dthreshgap,athreshadj,talk)
 % Figure handle
 hFig=[];
 
@@ -15,7 +15,7 @@ end
 
 
 % Method 2
-L = getLines(imgray,30);
+L = getLines(imgray,20);
 L = L(:,1:4)';
 L = [L(1,:); L(3,:); L(2,:); L(4,:)];
 

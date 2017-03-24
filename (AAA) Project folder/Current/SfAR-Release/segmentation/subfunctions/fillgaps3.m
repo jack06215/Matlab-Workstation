@@ -1,5 +1,8 @@
 function LS=fillgaps3(LS,athresh,dthresh)
 
+    %% athresh is the tolerance in angle difference two line segments
+    %  dthresh is the scalar that length of two line segments will be
+    %          filled
     if nargin<2 || isempty(athresh)
         athresh=2;   % degrees
     end
@@ -8,6 +11,8 @@ function LS=fillgaps3(LS,athresh,dthresh)
                      % will be allowed as gap to be filled
     end
 
+    
+    %% Loop through all M line segments (4 * M)
     lindex1=0;
     while lindex1<size(LS,2)
         % pick the next line, divide the set into required parts
